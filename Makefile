@@ -6,7 +6,7 @@
 #    By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/22 14:06:43 by lumenthi          #+#    #+#              #
-#    Updated: 2019/11/14 11:17:30 by lumenthi         ###   ########.fr        #
+#    Updated: 2019/11/20 15:02:11 by lumenthi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,13 +40,12 @@ CROSS = '\033[1;31mx\033[0m'
 LIBDIR = libft
 SRCDIR = sources
 HEADDIR = headers
-INCDIR = libft
 OBJDIR = objs
 
 LIBFT = $(LIBDIR)/libft.a
 LIBFT_OBJ = $(LIBDIR)/objs
 
-HEADS = ft_malloc.h
+HEADS = manager.h
 
 SRCS = malloc.c \
 				free.c \
@@ -55,7 +54,6 @@ SRCS = malloc.c \
 
 SOURCES = $(addprefix $(SRCDIR)/, $(SRCS))
 HEADERS = $(addprefix $(HEADDIR)/, $(HEADS))
-INCLUDES = $(addprefix -I, $(INCDIR))
 OBJS = $(addprefix $(OBJDIR)/, $(SRCS:.c=.o))
 
 vpath %.c sources
@@ -73,7 +71,7 @@ $(NAME): $(OBJS) ${HEADERS}
 
 $(OBJDIR)/%.o: %.c
 	@ mkdir -p $(OBJDIR)
-	@ $(CC) -c $(FLAGS) $(INCLUDES) -o $@ $<
+	@ $(CC) -c $(FLAGS) -I$(HEADDIR) -I$(LIBDIR) -o $@ $<
 
 clean:
 	@ make -sC $(LIBDIR) clean
