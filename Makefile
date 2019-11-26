@@ -6,11 +6,11 @@
 #    By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/22 14:06:43 by lumenthi          #+#    #+#              #
-#    Updated: 2019/11/20 15:02:11 by lumenthi         ###   ########.fr        #
+#    Updated: 2019/11/26 20:02:52 by lumenthi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-.PHONY : all clean fclean re
+.PHONY : all clean fclean re run
 
 HOST = $(HOSTTYPE)
 CURRENT_DIR = $(shell pwd)
@@ -50,7 +50,7 @@ HEADS = manager.h
 SRCS = malloc.c \
 				free.c \
 				realloc.c \
-				show_alloc_mem.c
+				show_alloc_mem.c \
 
 SOURCES = $(addprefix $(SRCDIR)/, $(SRCS))
 HEADERS = $(addprefix $(HEADDIR)/, $(HEADS))
@@ -103,3 +103,6 @@ fclean: clean
 	printf "No %b%b%b symlink\n" $(CYAN) $(SYMLINK) $(BLANK))
 
 re: fclean all
+
+run: $(SYMLINKPATH)
+	@ ./inject ./test || true

@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 10:37:35 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/11/18 18:12:28 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/11/26 20:14:07 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,27 @@
 #include <string.h>
 #include <unistd.h>
 
-void main()
-{
+void	show_alloc_mem() {
+}
+
+void main1() {
 	char *str;
 
-	str = NULL;
 	str = (char *)malloc(sizeof(char) * 12);
+	write(1, "___main_segfault___\n", 20);
 	strcpy(str, "0123456789\n");
 	write(1, str, 11);
 	free(str);
+}
+
+void test2() {
+	char *str;
+	str = malloc(10);
+	// show_alloc_mem();
+	str = malloc(10);
+	// show_alloc_mem();
+}
+
+void main() {
+	test2();
 }
