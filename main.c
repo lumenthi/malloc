@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 10:37:35 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/11/26 20:14:07 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/11/29 19:14:25 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ void main1() {
 
 void test2() {
 	char *str;
-	str = malloc(10);
+	str = malloc(9);
 	// show_alloc_mem();
-	str = malloc(10);
+	str = malloc(15);
 	// show_alloc_mem();
 }
 

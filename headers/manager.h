@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 15:01:14 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/11/29 01:48:13 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/11/29 19:13:51 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,15 @@
 # include "libft.h"
 
 // DEFINE
-# define OVERHEAD		sizeof(t_chunk)
-# define HEADER(addr)	*(addr - OVERHEAD)
+# define CHUNK_OVERHEAD			sizeof(t_chunk)
+# define PAGE_OVERHEAD			sizeof(t_page)
+
+# define CHUNK_HEADER(addr)		*(addr - CHUNK_OVERHEAD)
+# define CHUNK_PAYLOAD(addr)	*(addr + CHUNK_OVERHEAD)
+
+# define PAGE_HEADER(addr)		*(addr - PAGE_OVERHEAD)
+# define PAGE_PAYLOAD(addr)		*(addr + PAGE_OVERHEAD)
+
 # define TINY_P			0
 # define SMALL_P		1
 # define LARGE_P		2
@@ -43,7 +50,7 @@ typedef struct				s_page {
 	struct s_page			*next;
 }							t_page;
 
-extern t_page				*g_pages[3]; // [0- TINY, 1- SMALL, 2- LARGE]
+extern t_page				*g_page[3]; // [0- TINY, 1- SMALL, 2- LARGE]
 void						show_alloc_mem();
 
 #endif
