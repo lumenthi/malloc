@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 15:01:14 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/11/28 01:00:52 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/11/29 01:17:09 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@
 // DEFINE
 # define OVERHEAD		sizeof(t_free_block)
 # define HEADER(addr)	*(addr - OVERHEAD)
+# define TINY_P			0
+# define SMALL_P		1
+# define LARGE_P		2
 // 64bits
 //# define TINY 992
 //# define SMALL 15360
@@ -29,16 +32,19 @@
 # define SMALL 20//15359
 # define LARGE 40//?????
 
-// STRUCTURES
-typedef struct				s_free_block {
-	struct s_free_block		*prev;
-	size_t					prev_size;
+typedef struct				s_chunk {
+	struct s_chunk			*prev;
 	size_t					size;
-	struct s_free_block		*next;
-	size_t					next_size;
-}							t_free_block;
+	struct s_chunk			*next;
+}							t_chunk;
 
-extern t_free_block			*g_bin[4]; // [0- TINY, 1- SMALL, 2- LARGE, 3- >LARGE]
+typedef struct				s_page {
+	struct s_page			*malloc_list;
+	struct s_page			*free_list;
+	struct s_page			*next;
+}							t_page;
+
+extern t_page				*g_pages[3]; // [0- TINY, 1- SMALL, 2- LARGE]
 void						show_alloc_mem();
 
 #endif

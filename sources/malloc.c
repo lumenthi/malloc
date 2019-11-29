@@ -6,13 +6,13 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 18:00:19 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/11/28 01:05:38 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/11/29 01:20:22 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "manager.h"
 
-t_free_block	*g_bin[4] = {NULL, NULL, NULL, NULL};
+t_page	*g_pages[3] = {NULL, NULL, NULL};
 
 void	*ft_alloc(size_t size) {
 	void *ret;
@@ -25,11 +25,11 @@ void	*ft_alloc(size_t size) {
 
 void	*malloc(size_t size) {
 	(void)size;
-	if (g_bin[0] == NULL) {
-		ft_putstr("NULL");
+	if (g_pages[0] == NULL) {
+		ft_putstr("NULL\n");
 	}
 	else
 		ft_putstr("ALLOC");
-	g_bin[0] = ft_alloc(10);
+	g_pages[0] = ft_alloc(10);
 	return NULL;
 }
