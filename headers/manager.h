@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 15:01:14 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/11/29 01:17:09 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/11/29 01:48:13 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,19 @@
 # include "libft.h"
 
 // DEFINE
-# define OVERHEAD		sizeof(t_free_block)
+# define OVERHEAD		sizeof(t_chunk)
 # define HEADER(addr)	*(addr - OVERHEAD)
 # define TINY_P			0
 # define SMALL_P		1
 # define LARGE_P		2
+
 // 64bits
 //# define TINY 992
 //# define SMALL 15360
-//# define LARGE ?????
 
 //32 bits
 # define TINY 10//496
 # define SMALL 20//15359
-# define LARGE 40//?????
 
 typedef struct				s_chunk {
 	struct s_chunk			*prev;
@@ -39,8 +38,8 @@ typedef struct				s_chunk {
 }							t_chunk;
 
 typedef struct				s_page {
-	struct s_page			*malloc_list;
-	struct s_page			*free_list;
+	t_chunk					*malloc_list;
+	t_chunk					*free_list;
 	struct s_page			*next;
 }							t_page;
 
