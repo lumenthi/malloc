@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 20:01:57 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/11/29 18:32:40 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/11/30 01:47:41 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void display_page(t_page *page, int zone) {
 
 	while (tmp) {
 		display_zone_name(zone);
+		ft_putaddress((size_t)tmp);
+		ft_putchar('\n');
 		tmp = tmp->next;
 	}
 }

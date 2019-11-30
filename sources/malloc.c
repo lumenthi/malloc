@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 18:00:19 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/11/29 19:14:43 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/11/30 02:34:47 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int		get_zone(size_t size) {
 	}
 	return TINY_P;
 }
+
+// TODO CODE FIND IN LIST
 
 void	*find_in_list(size_t size, t_chunk *free_list) {
 	t_chunk *tmp = free_list;
@@ -79,8 +81,10 @@ void	add_page_to_list(int zone, t_page *new_page) {
 		*head = new_page;
 		return ;
 	}
-	while (tmp->next != NULL)
+	while (tmp->next != NULL && tmp < tmp->next)
 		tmp = tmp->next;
+	if (tmp->next)
+		new_page->next = tmp->next;
 	tmp->next = new_page;
 }
 
