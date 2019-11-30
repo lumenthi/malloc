@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 18:00:19 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/11/30 02:34:47 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/11/30 20:36:21 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,23 @@ void	add_page_to_list(int zone, t_page *new_page) {
 	tmp->next = new_page;
 }
 
+void	add_chunk_to_free_list(t_chunk **free_list, t_chunk *chunk) {
+	t_chunk	*tmp = *free_list;
+
+	if (*free_list == NULL) {
+		*free_list = chunk;
+		return ;
+	}
+	while (tmp->next != NULL && tmp < tmp->next)
+		tmp = tmp->next;
+	if (tmp->next)
+		chunk->next = tmp->next;
+	tmp->next = chunk;
+}
+
 t_page	*new_page(int zone, size_t size) {
 	t_page *new_page = NULL;
+	t_chunk *new_chunk = NULL;
 	size_t alloc_size = 0;
 
 	if (zone == 2)
@@ -97,20 +112,28 @@ t_page	*new_page(int zone, size_t size) {
 	else
 		alloc_size = zone_size(zone);
 	new_page = ft_alloc(PAGE_OVERHEAD + alloc_size);
+	// CHUNK
+	new_chunk = (t_chunk *)(new_page + PAGE_OVERHEAD);
+	new_chunk->prev = NULL;
+	new_chunk->size = size;
+	new_chunk->next = NULL;
+	// PAGE
 	new_page->malloc_list = NULL;
-	new_page->free_list = NULL;
+	add_chunk_to_free_list(&new_page->free_list, new_chunk);
 	new_page->next = NULL;
 	add_page_to_list(zone, new_page);
 	return new_page;
 }
 
 void	*malloc(size_t size) {
+	size += CHUNK_OVERHEAD;
 	int zone = get_zone(size);
 	void *ret = find_free(size, zone);
 	// ret ? ft_putstr("FOUND\n") : ft_putstr("\nNULL");
 	if (!ret) {
 		new_page(zone, size);
 	}
-	show_alloc_mem();
+	// show_alloc_mem();
+	show_free_mem();
 	return ret;
 }

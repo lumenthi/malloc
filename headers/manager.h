@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 15:01:14 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/11/29 19:13:51 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/11/30 20:21:21 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ typedef struct				s_page {
 }							t_page;
 
 extern t_page				*g_page[3]; // [0- TINY, 1- SMALL, 2- LARGE]
+
 void						show_alloc_mem();
+void						show_free_mem();
 
 #endif
