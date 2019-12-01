@@ -6,7 +6,7 @@
 #    By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/22 14:06:43 by lumenthi          #+#    #+#              #
-#    Updated: 2019/11/26 20:02:52 by lumenthi         ###   ########.fr        #
+#    Updated: 2019/12/01 02:34:49 by lumenthi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -105,4 +105,5 @@ fclean: clean
 re: fclean all
 
 run: $(SYMLINKPATH)
+	@ gcc -o test main.c
 	@ ./inject ./test || true
