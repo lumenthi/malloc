@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 15:01:14 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/01 02:32:50 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/01 03:31:39 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,7 @@
 
 // DEFINE
 # define CHUNK_OVERHEAD			sizeof(t_chunk) // 24
-# define PAGE_OVERHEAD			sizeof(t_page)
-
-# define CHUNK_HEADER(addr)		*(addr - CHUNK_OVERHEAD)
-# define CHUNK_PAYLOAD(addr)	*(addr + CHUNK_OVERHEAD)
-
-# define PAGE_HEADER(addr)		*(addr - PAGE_OVERHEAD)
-# define PAGE_PAYLOAD(addr)		*(addr + PAGE_OVERHEAD)
+# define PAGE_OVERHEAD			sizeof(t_page) // 24
 
 # define TINY_P			0
 # define SMALL_P		1
@@ -35,7 +29,7 @@
 //# define SMALL 15360
 
 //32 bits
-# define TINY 100 + CHUNK_OVERHEAD//496
+# define TINY 100 + CHUNK_OVERHEAD//496 //124
 # define SMALL 500 + CHUNK_OVERHEAD//15359
 
 typedef struct				s_chunk {
