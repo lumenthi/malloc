@@ -6,14 +6,14 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 10:51:10 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/11/18 18:22:31 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/01 19:56:53 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 
-void free(void *ptr)
-{
-	(void)ptr;
-	write(1, "INJECTED_FREE\n", 14);
-}
+/*void free(void *ptr)*/
+/*{*/
+	/*(void)ptr;*/
+	/*write(1, "INJECTED_FREE\n", 14);*/
+/*}*/
