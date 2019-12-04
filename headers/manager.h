@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 15:01:14 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/02 03:19:04 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/04 19:20:22 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,16 @@
 # include "libft.h"
 
 // DEFINE
+
+// DEBUG
+# define d ft_putstr(".");
+
 # define CHUNK_OVERHEAD			sizeof(t_chunk) // 24
 # define PAGE_OVERHEAD			sizeof(t_page) // 24
+# define SECURE_PADDING			1
+
+# define CHUNK_PAYLOAD(addr)	addr+CHUNK_OVERHEAD+SECURE_PADDING
+# define CHUNK_HEADER(addr)		addr-SECURE_PADDING-CHUNK_OVERHEAD
 
 # define TINY_P			0
 # define SMALL_P		1

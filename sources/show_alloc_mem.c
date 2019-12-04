@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 20:01:57 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/02 00:46:43 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/04 19:01:31 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ void display_chunks(t_page *page, char mode) {
 	else
 		ft_putstr("FREE CHUNKS :\n");
 	while (tmp) {
-		ft_putaddress((size_t)tmp + CHUNK_OVERHEAD);
+		ft_putaddress((void *)tmp + CHUNK_OVERHEAD + SECURE_PADDING);
 		ft_putstr(" - ");
-		ft_putaddress((size_t)tmp + tmp->size);
+		ft_putaddress((void *)tmp + tmp->size - SECURE_PADDING);
 		ft_putstr(": ");
-		ft_putnbr(tmp->size - CHUNK_OVERHEAD);
+		ft_putnbr(tmp->size - CHUNK_OVERHEAD - SECURE_PADDING * 2);
 		ft_putstr(" octet(s)\n");
 		tmp = tmp->next;
 	}
@@ -45,7 +45,7 @@ void display_page(t_page *page, int zone, char mode) {
 
 	while (tmp) {
 		display_zone_name(zone);
-		ft_putaddress((size_t)tmp);
+		ft_putaddress(tmp);
 		ft_putchar('\n');
 		display_chunks(tmp, mode);
 		tmp = tmp->next;

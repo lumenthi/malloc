@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/11 10:50:56 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/02/11 20:56:33 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/04 17:34:04 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,6 @@ char			*ft_delete(char *line, int pos, int len);
 void			ft_printtab(char **tab);
 int				ft_isprintable(int c);
 char			*ft_strjoinl(char *s1, char *s2);
-void			ft_putaddress(size_t input);
+void			ft_putaddress(void *addr);
 void			ft_exit(const char *msg);
 #endif

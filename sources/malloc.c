@@ -6,13 +6,27 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 18:00:19 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/02 03:20:05 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/04 19:19:29 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "manager.h"
 
 t_page	*g_page[3] = {NULL, NULL, NULL};
+
+void	debug_address(void *address, char *str) {
+	ft_putaddress(address);
+	ft_putstr(": ");
+	ft_putstr(str);
+	ft_putchar('\n');
+}
+
+void debug_size(size_t size, char *name) {
+	ft_putstr(name);
+	ft_putstr(": ");
+	ft_putnbr(size);
+	ft_putchar('\n');
+}
 
 void	*ft_alloc(size_t size) {
 	void *ret;
@@ -61,6 +75,13 @@ void	add_page_to_list(int zone, t_page *new_page) {
 	tmp->next = new_page;
 }
 
+int is_valid(void *tmp) {
+	char *t = tmp;
+	if (t && *(t - 1) == '\0' && *(t + 1) == '\0')
+		return 1;
+	return 0;
+}
+
 void	add_chunk_to_list(t_chunk **list, t_chunk *chunk) {
 	t_chunk	*tmp = *list;
 	if (*list == NULL) {
@@ -75,7 +96,7 @@ void	add_chunk_to_list(t_chunk **list, t_chunk *chunk) {
 		*list = chunk;
 		return ;
 	}
-	while (tmp->next && chunk > tmp->next)
+	while (is_valid(tmp->next) && tmp->next && chunk > tmp->next)
 		tmp = tmp->next;
 	if (tmp->next) {
 		chunk->next = tmp->next;
@@ -136,14 +157,16 @@ t_chunk	*increase_heap(int zone, size_t size) {
 	new_page->free_list = NULL;
 	new_page->next = NULL;
 	// CHUNK
-	new_chunk = (t_chunk *)((size_t)new_page + PAGE_OVERHEAD);
+	new_chunk = (t_chunk *)((void *)new_page + PAGE_OVERHEAD + SECURE_PADDING);
+	// SECURE_PADDING
+	ft_memset((void*)new_chunk - 1, '\0', 1);
+	ft_memset((void*)new_chunk + 1, '\0', 1);
 	new_chunk->prev = NULL;
 	new_chunk->size = alloc_size;
 	new_chunk->next = NULL;
 	// LISTS
 	add_chunk_to_list(&new_page->free_list, new_chunk);
 	alloc(&new_page, new_chunk, size);
-
 	add_page_to_list(zone, new_page);
 	return new_chunk;
 }
@@ -151,8 +174,11 @@ t_chunk	*increase_heap(int zone, size_t size) {
 void	*find_in_list(size_t size, t_chunk *free_list) {
 	t_chunk *tmp = free_list;
 	while (tmp) {
-		if (tmp->size >= size)
-			return tmp;
+		if (tmp && tmp->size) {
+			if (tmp->size && tmp->size >= size) {
+				return tmp;
+			}
+		}
 		tmp = tmp->next;
 	}
 	return NULL;
@@ -163,8 +189,9 @@ void	*find_in_zone(size_t size, int zone) {
 	t_page *tmp = g_page[zone];
 
 	while (tmp) {
-		if ((found = find_in_list(size, tmp->free_list)))
+		if ((found = find_in_list(size, tmp->free_list))) {
 			return alloc(&tmp, found, size);
+		}
 		tmp = tmp->next;
 	}
 	return NULL;
@@ -174,8 +201,9 @@ void	*find_free(size_t size, int begin_zone) {
 	void *found = NULL;
 
 	while (begin_zone < 3) {
-		if ((found = find_in_zone(size, begin_zone)))
+		if ((found = find_in_zone(size, begin_zone))) {
 			return found;
+		}
 		begin_zone++;
 	}
 	return NULL;
@@ -185,7 +213,7 @@ void	*page_head(t_chunk *chunk) {
 	t_chunk *tmp = chunk;
 	while (tmp->prev)
 		tmp = tmp->prev;
-	return (void *)tmp - PAGE_OVERHEAD;
+	return (void *)tmp - PAGE_OVERHEAD - SECURE_PADDING;
 }
 
 void	merge_chunk(t_chunk **list, t_chunk *chunk) {
@@ -205,26 +233,62 @@ void	merge_chunk(t_chunk **list, t_chunk *chunk) {
 	}
 }
 
-void	free(void *ptr) {
+int		invalid_address(void *ptr) {
+	t_chunk *tmp;
 	t_page *page = NULL;
-	if (!ptr)
+	int i = 0;
+
+	while (i < 3) {
+		page = g_page[i];
+		while (page) {
+			tmp = page->malloc_list;
+			while (tmp) {
+				d
+				if ((size_t)tmp <= (size_t)ptr &&
+					(size_t)ptr < (size_t)tmp + tmp->size) {
+					return 0;
+				}
+				tmp = tmp->next;
+			}
+			page = page->next;
+		}
+		i++;
+	}
+	return 1;
+}
+
+void	free(void *ptr) {
+	ft_putstr("FREE : ");
+	ft_putaddress(ptr);
+	t_page *page = NULL;
+	d
+	if (!ptr || invalid_address(ptr)) {
+		ft_putstr(" - COMPLETED\n");
 		return;
-	ptr = ptr - CHUNK_OVERHEAD;
+	}
+	d
+	ptr = CHUNK_HEADER(ptr);
+	if (!is_valid(ptr))
+		return;
 	page = (t_page *)page_head(ptr);
 	remove_chunk_from_list(&page->malloc_list, ptr);
 	add_chunk_to_list(&page->free_list, ptr);
 	merge_chunk(&page->free_list, ptr);
+	ft_putstr(" - COMPLETED\n");
 	//show_alloc_mem();
 	//show_free_mem();
 }
 
 void	*malloc(size_t size) {
-	size += CHUNK_OVERHEAD;
+	ft_putstr("MALLOC: ");
+	size += SECURE_PADDING + CHUNK_OVERHEAD + SECURE_PADDING;
 	int zone = get_zone(size);
 	void *ret = find_free(size, zone);
 	if (!ret)
 		ret = increase_heap(zone, size);
-	//show_alloc_mem();
-	//show_free_mem();
-	return ret + CHUNK_OVERHEAD;
+	ft_putaddress(CHUNK_PAYLOAD(ret));
+	ft_putstr(" - COMPLETED\n");
+	// show_alloc_mem();
+	// show_free_mem();
+	return CHUNK_PAYLOAD(ret);
 }

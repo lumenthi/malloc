@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/18 13:49:00 by lumenthi          #+#    #+#             */
-/*   Updated: 2018/09/18 13:51:28 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/04 17:33:37 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,15 @@ static int   hex_len(size_t input)
   return (i);
 }
 
-void        ft_putaddress(size_t input)
+void        ft_putaddress(void *addr)
 {
   char    HEX_ARRAY[17];
   int     i;
   int     len;
+  size_t  input;
 
   i = 0;
+  input = (size_t)addr;
   len = hex_len(input);
   ft_strcpy(HEX_ARRAY, "0123456789ABCDEF");
   ft_putstr("0x");
