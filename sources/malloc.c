@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 18:00:19 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/04 19:26:35 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/04 20:01:12 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ t_chunk	*alloc(t_page **page, t_chunk *free_chunk, size_t size) {
 	remove_chunk_from_list(free_list, free_chunk);
 	// SPLIT
 	remaining = free_chunk->size - size;
-	if (remaining > (int)CHUNK_OVERHEAD) {
+	if (remaining > (int)CHUNK_OVERHEAD + SECURE_PADDING * 2) {
 		new_chunk = (t_chunk *)((size_t)free_chunk + size);
 		new_chunk->prev = NULL;
 		new_chunk->size = remaining;
