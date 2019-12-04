@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 18:00:19 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/04 19:19:29 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/04 19:26:35 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,8 +242,7 @@ int		invalid_address(void *ptr) {
 		page = g_page[i];
 		while (page) {
 			tmp = page->malloc_list;
-			while (tmp) {
-				d
+			while (tmp && is_valid(tmp->next)) {
 				if ((size_t)tmp <= (size_t)ptr &&
 					(size_t)ptr < (size_t)tmp + tmp->size) {
 					return 0;
@@ -261,12 +260,10 @@ void	free(void *ptr) {
 	ft_putstr("FREE : ");
 	ft_putaddress(ptr);
 	t_page *page = NULL;
-	d
 	if (!ptr || invalid_address(ptr)) {
 		ft_putstr(" - COMPLETED\n");
 		return;
 	}
-	d
 	ptr = CHUNK_HEADER(ptr);
 	if (!is_valid(ptr))
 		return;

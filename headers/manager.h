@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 15:01:14 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/04 19:20:22 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/04 19:43:24 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@
 //# define SMALL 15360
 
 //32 bits
-# define TINY 500 + CHUNK_OVERHEAD//496 //124
-# define SMALL 10000 + CHUNK_OVERHEAD//15359
+# define TINY 992 + CHUNK_OVERHEAD//496 //124
+# define SMALL 15369 + CHUNK_OVERHEAD//15359
 
 typedef struct				s_chunk {
 	struct s_chunk			*prev;
