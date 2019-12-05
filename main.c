@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 10:37:35 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/05 15:31:16 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/05 20:56:21 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ void show_alloc_mem() {
 }
 
 void *malloc_fill(size_t size) {
-	int *ptr = NULL;
-	ptr = malloc(sizeof(int) * size);
+	char *ptr = NULL;
+	ptr = malloc(sizeof(char) * size);
 	int i = 0;
-	while (i < size + 4) {
-		ptr[i++] = 1;
+	while (i < size) {
+		ptr[i++] = 'f';
 	}
 	return ptr;
 }
@@ -97,6 +97,62 @@ void test6() {
 	void *new_ptr = realloc(ptr, 20);
 }
 
+void test7() {
+	free(malloc_fill(5));
+	malloc_fill(120);
+	malloc_fill(12);
+	malloc_fill(776);
+	malloc_fill(112);
+	malloc_fill(1336);
+	malloc_fill(216);
+	malloc_fill(432);
+	malloc_fill(104);
+	malloc_fill(88);
+	malloc_fill(120);
+	malloc_fill(168);
+	malloc_fill(104);
+	malloc_fill(80);
+	malloc_fill(192);
+	malloc_fill(12);
+	malloc_fill(12);
+	malloc_fill(12);
+	malloc_fill(12);
+	malloc_fill(12);
+	malloc_fill(12);
+	malloc_fill(5);
+	malloc_fill(120);
+	malloc_fill(12);
+	malloc_fill(776);
+	malloc_fill(112);
+	malloc_fill(1336);
+	malloc_fill(216);
+	malloc_fill(432);
+	malloc_fill(104);
+	malloc_fill(88);
+	malloc_fill(120);
+	malloc_fill(168);
+	malloc_fill(104);
+	malloc_fill(80);
+	malloc_fill(192);
+	malloc_fill(12);
+	malloc_fill(12);
+	malloc_fill(12);
+	malloc_fill(12);
+	malloc_fill(12);
+	malloc_fill(12);
+	malloc_fill(281);
+	malloc_fill(281);
+	malloc_fill(29);
+	malloc_fill(5);
+	malloc_fill(5);
+	malloc_fill(1264);
+}
+
+void test8() {
+	malloc_fill(963);
+	malloc_fill(1);
+}
+
 void main() {
-	test6();
+	test8();
 }

@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 18:00:19 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/05 15:46:22 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/05 20:56:03 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,17 @@ void			*malloc(size_t size) {
 	if (debug) {
 		ft_putstr("malloc(");
 		ft_putnbr(size);
-		ft_putstr(")\n");
+		ft_putstr(");");
 	}
 	size += SECURE_PADDING + CHUNK_OVERHEAD + SECURE_PADDING;
 	int zone = get_zone(size);
 	void *ret = find_free(size, zone);
 	if (!ret)
 		ret = increase_heap(zone, size);
+	if (debug) {
+		ft_putstr("\nreturn ");
+		ft_putaddress(CHUNK_PAYLOAD(ret));
+		ft_putstr(";\n");
+	}
 	return CHUNK_PAYLOAD(ret);
 }
