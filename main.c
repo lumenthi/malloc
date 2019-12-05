@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 10:37:35 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/05 01:07:43 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/05 15:31:16 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,14 @@ void test5() {
 		write(1, &ptr[i], 1);
 		i++;
 	}
+}
 
+void test6() {
+	int size = 20;
+	void *ptr = malloc_fill(20);
+	void *new_ptr = realloc(ptr, 20);
 }
 
 void main() {
-	test4();
+	test6();
 }

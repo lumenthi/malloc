@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 18:00:19 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/05 01:43:08 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/05 15:46:22 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,11 @@ static t_chunk	*increase_heap(int zone, size_t size) {
 }
 
 void			*malloc(size_t size) {
+	if (debug) {
+		ft_putstr("malloc(");
+		ft_putnbr(size);
+		ft_putstr(")\n");
+	}
 	size += SECURE_PADDING + CHUNK_OVERHEAD + SECURE_PADDING;
 	int zone = get_zone(size);
 	void *ret = find_free(size, zone);

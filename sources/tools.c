@@ -6,13 +6,15 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 01:32:22 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/05 01:36:02 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/05 15:49:32 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "manager.h"
 
 // DEBUG, REMOVE AFTER
+
+int		debug = 0;
 
 void	debug_address(void *address, char *str) {
 	ft_putaddress(address);

@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 15:01:14 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/05 01:44:38 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/05 15:48:52 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 
 // DEBUG
 # define d ft_putstr(".");
+extern int		debug;
 
 # define CHUNK_OVERHEAD			sizeof(t_chunk) // 24
 # define PAGE_OVERHEAD			sizeof(t_page) // 24
@@ -55,6 +56,13 @@ typedef struct				s_page {
 // malloc.c
 extern t_page				*g_page[3]; // [0- TINY, 1- SMALL, 2- LARGE]
 t_chunk						*alloc(t_page **page, t_chunk *free_chunk, size_t size);
+void						*malloc(size_t size);
+
+// realloc.c
+void						*realloc(void *ptr, size_t size);
+
+// free.c
+void						free(void *ptr);
 
 // tools.c
 // debug functions

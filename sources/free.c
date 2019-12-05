@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 10:51:10 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/05 01:35:03 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/05 15:46:27 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,11 @@ static void	merge_chunk(t_chunk **list, t_chunk *chunk) {
 }
 
 void	free(void *ptr) {
+	if (debug) {
+		ft_putstr("free(");
+		ft_putaddress(ptr);
+		ft_putstr(");\n");
+	}
 	t_page *page = NULL;
 	if (!ptr || invalid_address(ptr))
 		return;
