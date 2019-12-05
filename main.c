@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 10:37:35 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/04 19:42:55 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/05 01:07:43 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,16 @@
 #include <unistd.h>
 
 void show_alloc_mem() {
+}
+
+void *malloc_fill(size_t size) {
+	int *ptr = NULL;
+	ptr = malloc(sizeof(int) * size);
+	int i = 0;
+	while (i < size + 4) {
+		ptr[i++] = 1;
+	}
+	return ptr;
 }
 
 void main1() {
@@ -34,13 +44,54 @@ void test2() {
 }
 
 void test3() {
-	void *ptr = malloc(600);
-	void *ptr2 = malloc(600);
-	void *ptr3 = malloc(600);
+	void *ptr = malloc(74);
 	free(ptr);
-	free(ptr2);
+}
+
+void test4() {
+	free(malloc_fill(28));
+	malloc_fill(5);
+	malloc_fill(120);
+	malloc_fill(12);
+	malloc_fill(776);
+	malloc_fill(112);
+	malloc_fill(1336);
+	malloc_fill(216);
+	malloc_fill(432);
+	malloc_fill(104);
+	malloc_fill(88);
+	malloc_fill(120);
+	malloc_fill(168);
+	malloc_fill(104);
+	malloc_fill(80);
+	malloc_fill(192);
+	free(malloc_fill(12));
+	malloc_fill(171);
+	malloc_fill(12);
+	malloc_fill(181);
+	malloc_fill(12);
+	malloc_fill(191);
+	malloc_fill(6);
+	free(malloc_fill(4));
+	malloc_fill(112);
+	malloc_fill(120);
+	malloc_fill(24);
+	malloc_fill(18);
+	malloc_fill(32);
+	malloc_fill(24);
+}
+
+void test5() {
+	int i = 0;
+	int size = 10;
+	char *ptr = malloc_fill(size);
+	while (i < size) {
+		write(1, &ptr[i], 1);
+		i++;
+	}
+
 }
 
 void main() {
-	test3();
+	test4();
 }

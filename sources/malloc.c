@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 18:00:19 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/04 20:01:12 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/05 01:19:15 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,13 +173,12 @@ t_chunk	*increase_heap(int zone, size_t size) {
 
 void	*find_in_list(size_t size, t_chunk *free_list) {
 	t_chunk *tmp = free_list;
-	while (tmp) {
-		if (tmp && tmp->size) {
-			if (tmp->size && tmp->size >= size) {
+	if (is_valid(tmp)) {
+		while (is_valid(tmp->next) && tmp) {
+			if (tmp->size >= size)
 				return tmp;
-			}
+			tmp = tmp->next;
 		}
-		tmp = tmp->next;
 	}
 	return NULL;
 }
@@ -257,11 +256,11 @@ int		invalid_address(void *ptr) {
 }
 
 void	free(void *ptr) {
-	ft_putstr("FREE : ");
-	ft_putaddress(ptr);
+	// ft_putstr("FREE : ");
+	// ft_putaddress(ptr);
 	t_page *page = NULL;
 	if (!ptr || invalid_address(ptr)) {
-		ft_putstr(" - COMPLETED\n");
+		// ft_putstr(" - COMPLETED\n");
 		return;
 	}
 	ptr = CHUNK_HEADER(ptr);
@@ -271,20 +270,22 @@ void	free(void *ptr) {
 	remove_chunk_from_list(&page->malloc_list, ptr);
 	add_chunk_to_list(&page->free_list, ptr);
 	merge_chunk(&page->free_list, ptr);
-	ft_putstr(" - COMPLETED\n");
+	// ft_putstr(" - COMPLETED\n");
 	//show_alloc_mem();
 	//show_free_mem();
 }
 
 void	*malloc(size_t size) {
-	ft_putstr("MALLOC: ");
+	// ft_putstr("MALLOC: ");
+	// ft_putnbr(size);
+	// ft_putchar('\n');
 	size += SECURE_PADDING + CHUNK_OVERHEAD + SECURE_PADDING;
 	int zone = get_zone(size);
 	void *ret = find_free(size, zone);
 	if (!ret)
 		ret = increase_heap(zone, size);
-	ft_putaddress(CHUNK_PAYLOAD(ret));
-	ft_putstr(" - COMPLETED\n");
+	// ft_putaddress(CHUNK_PAYLOAD(ret));
+	// ft_putstr(" - COMPLETED\n");
 	// show_alloc_mem();
 	// show_free_mem();
 	return CHUNK_PAYLOAD(ret);
