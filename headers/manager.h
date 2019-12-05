@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 15:01:14 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/04 19:43:24 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/05 01:44:38 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,31 @@ typedef struct				s_page {
 	struct s_page			*next;
 }							t_page;
 
+// malloc.c
 extern t_page				*g_page[3]; // [0- TINY, 1- SMALL, 2- LARGE]
+t_chunk						*alloc(t_page **page, t_chunk *free_chunk, size_t size);
+
+// tools.c
+// debug functions
+void						debug_address(void *address, char *str);
+void						debug_size(size_t size, char *name);
+//
+void						*page_head(t_chunk *chunk);
+int							get_zone(size_t size);
+size_t						zone_size(int zone);
+int							is_valid(void *tmp);
+void						*ft_alloc(size_t size);
+
+// search.c
+void						*find_free(size_t size, int begin_zone);
+int							invalid_address(void *ptr);
+
+// list.c
+void						add_page_to_list(int zone, t_page *new_page);
+void						add_chunk_to_list(t_chunk **list, t_chunk *chunk);
+void						remove_chunk_from_list(t_chunk **list, t_chunk *chunk);
+
+// show_alloc_mem.c
 
 void						show_alloc_mem();
 void						show_free_mem();

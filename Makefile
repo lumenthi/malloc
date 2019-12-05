@@ -6,7 +6,7 @@
 #    By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/22 14:06:43 by lumenthi          #+#    #+#              #
-#    Updated: 2019/12/01 02:34:49 by lumenthi         ###   ########.fr        #
+#    Updated: 2019/12/05 01:37:04 by lumenthi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,6 +51,9 @@ SRCS = malloc.c \
 				free.c \
 				realloc.c \
 				show_alloc_mem.c \
+				list.c \
+				search.c \
+				tools.c
 
 SOURCES = $(addprefix $(SRCDIR)/, $(SRCS))
 HEADERS = $(addprefix $(HEADDIR)/, $(HEADS))
