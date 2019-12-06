@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 20:01:57 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/05 20:48:08 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/06 01:47:37 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ void display_chunks(t_page *page, char mode) {
 	else
 		ft_putstr("FREE CHUNKS :\n");
 	while (tmp && is_valid(tmp)) {
-		ft_putaddress((void *)tmp + CHUNK_OVERHEAD + SECURE_PADDING);
+		ft_putaddress((void *)CHUNK_PAYLOAD(tmp));
 		ft_putstr(" - ");
-		ft_putaddress((void *)tmp + tmp->size - SECURE_PADDING);
+		ft_putaddress((void *)tmp + tmp->size);
 		ft_putstr(": ");
 		ft_putnbr(tmp->size - CHUNK_OVERHEAD - SECURE_PADDING * 2);
 		ft_putstr(" octet(s)\n");

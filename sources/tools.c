@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 01:32:22 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/05 20:57:50 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/06 01:40:13 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,19 @@
 
 // DEBUG, REMOVE AFTER
 
-int		debug = 0;
+int		debug = 1;
 
 void	debug_address(void *address, char *str) {
 	ft_putaddress(address);
 	ft_putstr(": ");
 	ft_putstr(str);
+	ft_putchar('\n');
+}
+
+void	debug_character(char value, char *name) {
+	ft_putchar(value);
+	ft_putstr(": ");
+	ft_putstr(name);
 	ft_putchar('\n');
 }
 
@@ -36,7 +43,7 @@ void	*page_head(t_chunk *chunk) {
 	t_chunk *tmp = chunk;
 	while (tmp->prev)
 		tmp = tmp->prev;
-	return (void *)tmp - PAGE_OVERHEAD - SECURE_PADDING;
+	return (void *)tmp - PAGE_OVERHEAD - SECURE_PADDING * 2;
 }
 
 int		get_zone(size_t size) {
@@ -57,8 +64,9 @@ size_t	zone_size(int zone) {
 
 int		is_valid(void *tmp) {
 	char *t = tmp;
-	if (t && *(t - 1) == '\0' && *(t + 1) == '\0')
+	if (t && *(t - 1) == '\0' && *(t + 1) == '\0') {
 		return 1;
+	}
 	return 0;
 }
 

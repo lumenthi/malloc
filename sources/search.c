@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 01:27:30 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/05 20:50:19 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/06 01:44:08 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,9 @@ int		invalid_address(void *ptr) {
 		while (page) {
 			tmp = page->malloc_list;
 			while (is_valid(tmp)) {
-				if ((size_t)CHUNK_PAYLOAD(tmp) == (size_t)ptr)
+				debug_address(CHUNK_PAYLOAD(tmp), "tmp payload");
+				debug_address(ptr, "ptr");
+				if (CHUNK_PAYLOAD(tmp) == ptr)
 					return 0;
 				tmp = tmp->next;
 			}
