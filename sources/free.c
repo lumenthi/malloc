@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 10:51:10 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/06 01:42:07 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/06 03:28:31 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,21 +32,25 @@ void	free(void *ptr) {
 	if (debug) {
 		ft_putstr("free(");
 		ft_putaddress(ptr);
-		ft_putstr(");\n");
+		ft_putstr(");");
 	}
 	t_page *page = NULL;
-	if (!ptr || invalid_address(ptr))
+	if (!ptr) {
+		if (debug)
+			ft_putstr("\nreturn;\n");
 		return;
+	}
 	ptr = CHUNK_HEADER(ptr);
-	if (!is_valid(ptr))
+	if (invalid_address(ptr) || !is_valid(ptr)) {
+		if (debug)
+			ft_putstr("\nreturn;\n");
 		return;
-	ft_putstr("VALID\n");
+	}
 	page = (t_page *)page_head(ptr);
-	t_chunk *malloc_list = (t_chunk *)&page->malloc_list;
-	t_chunk *free_list = (t_chunk *)&page->free_list;
-	remove_chunk_from_list(&malloc_list, ptr);
-	add_chunk_to_list(&free_list, ptr);
-	merge_chunk(&free_list, ptr);
-	show_alloc_mem();
-	show_free_mem();
+	remove_chunk_from_list(&page->malloc_list, ptr);
+	add_chunk_to_list(&page->free_list, ptr);
+	merge_chunk(&page->free_list, ptr);
+	ft_putstr("\nreturn;\n");
+	//show_alloc_mem();
+	//show_free_mem();
 }

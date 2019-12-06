@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 18:00:19 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/06 01:45:00 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/06 02:58:16 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void			*malloc(size_t size) {
 		ft_putaddress(CHUNK_PAYLOAD(ret));
 		ft_putstr(";\n");
 	}
-	show_alloc_mem();
+	// show_alloc_mem();
 	// show_free_mem();
 	return CHUNK_PAYLOAD(ret);
 }

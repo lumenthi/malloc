@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 01:32:22 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/06 01:40:13 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/06 03:25:44 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,10 @@ void	debug_size(size_t size, char *name) {
 
 void	*page_head(t_chunk *chunk) {
 	t_chunk *tmp = chunk;
-	while (tmp->prev)
-		tmp = tmp->prev;
+	if (is_valid(tmp)) {
+		while (tmp->prev && is_valid(tmp->prev))
+			tmp = tmp->prev;
+	}
 	return (void *)tmp - PAGE_OVERHEAD - SECURE_PADDING * 2;
 }
 
@@ -64,9 +66,13 @@ size_t	zone_size(int zone) {
 
 int		is_valid(void *tmp) {
 	char *t = tmp;
-	if (t && *(t - 1) == '\0' && *(t + 1) == '\0') {
+	// debug_address((t-1), "t-1");
+	// debug_address(t + CHUNK_OVERHEAD + 1, "t + CHUNK_OVERHEAD + 1");
+	if (t && *(t - 1) == '\0' && *(t + CHUNK_OVERHEAD + 1) == '\0') {
+		// ft_putstr("VALID\n");
 		return 1;
 	}
+	// ft_putstr("INVALID\n");
 	return 0;
 }
 
