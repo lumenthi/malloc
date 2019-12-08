@@ -6,21 +6,21 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 10:51:10 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/06 03:28:31 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/08 02:03:01 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "manager.h"
 
 static void	merge_chunk(t_chunk **list, t_chunk *chunk) {
-	if (chunk->prev) {
+	if (chunk->prev && is_valid(chunk->prev)) {
 		if ((void*)chunk->prev + chunk->prev->size == chunk) {
 			chunk->prev->size += chunk->size;
 			remove_chunk_from_list(list, chunk);
 			chunk = chunk->prev;
 		}
 	}
-	if (chunk->next) {
+	if (chunk->next && is_valid(chunk->next)) {
 		if ((void*)chunk + chunk->size == (void*)chunk->next) {
 			chunk->size += chunk->next->size;
 			remove_chunk_from_list(list, chunk->next);
@@ -37,20 +37,21 @@ void	free(void *ptr) {
 	t_page *page = NULL;
 	if (!ptr) {
 		if (debug)
-			ft_putstr("\nreturn;\n");
+			ft_putstr("\nreturn no ptr;\n");
 		return;
 	}
 	ptr = CHUNK_HEADER(ptr);
 	if (invalid_address(ptr) || !is_valid(ptr)) {
 		if (debug)
-			ft_putstr("\nreturn;\n");
+			ft_putstr("\nreturn not valid;\n");
 		return;
 	}
 	page = (t_page *)page_head(ptr);
 	remove_chunk_from_list(&page->malloc_list, ptr);
 	add_chunk_to_list(&page->free_list, ptr);
 	merge_chunk(&page->free_list, ptr);
-	ft_putstr("\nreturn;\n");
+	if (debug)
+		ft_putstr("\nreturn;\n");
 	//show_alloc_mem();
 	//show_free_mem();
 }

@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 01:30:41 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/06 03:04:40 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/08 03:03:04 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,30 +33,44 @@ void	add_page_to_list(int zone, t_page *new_page) {
 }
 
 void	add_chunk_to_list(t_chunk **list, t_chunk *chunk) {
+	debug_address(chunk, "chunk");
+	debug_address(chunk->next, "chunk->next");
 	t_chunk	*tmp = *list;
 	if (*list == NULL) {
+		ft_putstr("1");
 		chunk->prev = NULL;
 		*list = chunk;
 		return ;
 	}
 	if (chunk < *list) {
+		ft_putstr("2");
 		chunk->prev = NULL;
 		chunk->next = *list;
 		(*list)->prev = chunk;
 		*list = chunk;
 		return ;
 	}
-	while (tmp->next && is_valid(tmp->next) && chunk > tmp->next)
+	while (is_valid(tmp->next) && chunk > tmp->next) {
 		tmp = tmp->next;
-	if (tmp->next && is_valid(tmp->next)) {
+	}
+	if (is_valid(tmp->next)) {
+		debug_address(tmp, "tmp");
+		debug_address(tmp->next, "tmp->next");
+		ft_putstr("3");
 		chunk->next = tmp->next;
 		tmp->next->prev = chunk;
 	}
 	else {
+		ft_putstr("4");
 		chunk->next = NULL;
 	}
 	tmp->next = chunk;
 	chunk->prev = tmp;
+	debug_address(tmp, "tmp");
+	while (tmp->next) {
+		tmp = tmp->next;
+	}
+	ft_putstr("\nEND\n");
 }
 
 void	remove_chunk_from_list(t_chunk **list, t_chunk *chunk) {

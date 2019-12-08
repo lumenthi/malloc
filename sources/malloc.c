@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 18:00:19 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/06 02:58:16 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/08 03:01:43 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ t_page			*g_page[3] = {NULL, NULL, NULL};
 void			secure_chunk(t_chunk *chunk) {
 	// debug_address((void*)chunk - 1, "SECURING");
 	// debug_address(chunk, "CHUNK");
-	// debug_address((void*)chunk + CHUNK_OVERHEAD + 1, "SECURING");
+	// debug_address((void*)chunk + CHUNK_OVERHEAD, "SECURING");
 	ft_memset((void*)chunk - 1, '\0', 1);
-	ft_memset((void*)chunk + CHUNK_OVERHEAD + 1, '\0', 1);
+	ft_memset((void*)chunk + CHUNK_OVERHEAD, '\0', 1);
 }
 
 t_chunk			*alloc(t_page **page, t_chunk *free_chunk, size_t size) {
@@ -34,12 +34,12 @@ t_chunk			*alloc(t_page **page, t_chunk *free_chunk, size_t size) {
 	if (remaining > (int)CHUNK_OVERHEAD + SECURE_PADDING * 2) {
 		new_chunk = (void*)free_chunk + size;
 		new_chunk->prev = NULL;
-		new_chunk->size = remaining;
+		new_chunk->size = remaining - 1;
 		new_chunk->next = NULL;
 		secure_chunk(new_chunk);
 		add_chunk_to_list(free_list, new_chunk);
 	}
-	free_chunk->size = size;
+	free_chunk->size = size - 1;
 	// SECURE_PADDING
 	secure_chunk(free_chunk);
 	// ADD TO MALLOC_LIST
@@ -61,13 +61,15 @@ static t_chunk	*increase_heap(int zone, size_t size) {
 	new_page++;
 	// SECURE_PADDING
 	ft_memset((void*)new_page - 1, '\0', 1);
-	ft_memset((void*)new_page + PAGE_OVERHEAD + 1, '\0', 1);
+	ft_memset((void*)new_page + PAGE_OVERHEAD, '\0', 1);
+	// debug_address((void*)new_page - 1, "SECURING");
+	// debug_address(new_page, "PAGE");
+	// debug_address((void*)new_page + PAGE_OVERHEAD, "SECURING");
 	new_page->malloc_list = NULL;
 	new_page->free_list = NULL;
 	new_page->next = NULL;
 	// CHUNK
 	new_chunk = (t_chunk *)((void *)new_page + PAGE_OVERHEAD + SECURE_PADDING * 2);
-
 	new_chunk->prev = NULL;
 	new_chunk->size = alloc_size;
 	new_chunk->next = NULL;
@@ -94,7 +96,7 @@ void			*malloc(size_t size) {
 		ft_putaddress(CHUNK_PAYLOAD(ret));
 		ft_putstr(";\n");
 	}
-	// show_alloc_mem();
-	// show_free_mem();
+	show_alloc_mem();
+	show_free_mem();
 	return CHUNK_PAYLOAD(ret);
 }

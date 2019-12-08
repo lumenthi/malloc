@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 01:32:22 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/06 03:25:44 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/08 02:08:19 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int		is_valid(void *tmp) {
 	char *t = tmp;
 	// debug_address((t-1), "t-1");
 	// debug_address(t + CHUNK_OVERHEAD + 1, "t + CHUNK_OVERHEAD + 1");
-	if (t && *(t - 1) == '\0' && *(t + CHUNK_OVERHEAD + 1) == '\0') {
+	if (t && *(t - 1) == '\0' && *(t + CHUNK_OVERHEAD) == '\0') {
 		// ft_putstr("VALID\n");
 		return 1;
 	}

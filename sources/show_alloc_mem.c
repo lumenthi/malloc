@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 20:01:57 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/06 03:26:40 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/08 01:51:28 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void display_chunks(t_page *page, char mode) {
 		ft_putstr(" - ");
 		ft_putaddress((void *)tmp + tmp->size);
 		ft_putstr(": ");
-		ft_putnbr(tmp->size - CHUNK_OVERHEAD - SECURE_PADDING * 2);
+		ft_putnbr(tmp->size - CHUNK_OVERHEAD - SECURE_PADDING);
 		ft_putstr(" octet(s)\n");
 		tmp = tmp->next;
 	}
