@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 14:13:28 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/09 01:32:39 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/09 02:18:03 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ void	*realloc(void *ptr, size_t size) {
 	void *header = CHUNK_HEADER(ptr);
 	if (invalid_address(header) || !is_valid(header)) {
 		if (debug)
-			ft_putstr("\nreturn not valid;\n");
+			ft_putstr("return not valid;\n");
 		return malloc(size);
 	}
-	free(ptr);
 	void *new_ptr = malloc(size);
 	ft_memmove(new_ptr, ptr, size);
+	free(ptr);
 	if (debug) {
 		ft_putstr("return ");
 		ft_putaddress(new_ptr);

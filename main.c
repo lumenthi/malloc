@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 10:37:35 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/09 01:58:10 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/09 02:28:41 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,18 @@
 #include <string.h>
 #include <unistd.h>
 
-void *malloc_fill(size_t size) {
-	char *ptr = NULL;
-	ptr = malloc(sizeof(char) * size);
+void fill(void **ptr, int size) {
+	char *str = *ptr;
 	int i = 0;
 	while (i < size) {
-		ptr[i++] = 'f';
+		str[i++] = 'f';
 	}
+}
+
+void *malloc_fill(size_t size) {
+	void *ptr = NULL;
+	ptr = malloc(sizeof(char) * size);
+	fill(&ptr, size);
 	return ptr;
 }
 
@@ -177,8 +182,8 @@ void test10() {
 
 void test11() {
 	void *ptr1 = malloc(200);
-	void *ptr2 = malloc(200);
-	free(ptr2);
+	ptr1 = realloc(ptr1, 100);
+	fill(&ptr1, 2000);
 	free(ptr1);
 }
 

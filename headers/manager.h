@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 15:01:14 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/09 01:57:57 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/09 02:03:46 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ extern int		debug;
 
 # define CHUNK_OVERHEAD			sizeof(t_chunk) // 24
 # define PAGE_OVERHEAD			sizeof(t_page) // 24
-# define SECURE_PADDING			2
+# define SECURE_PADDING			1
 
 # define CHUNK_PAYLOAD(addr)	addr+CHUNK_OVERHEAD+SECURE_PADDING
 # define CHUNK_HEADER(addr)		addr-SECURE_PADDING-CHUNK_OVERHEAD
