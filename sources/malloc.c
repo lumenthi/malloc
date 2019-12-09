@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 18:00:19 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/08 03:01:43 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/09 01:51:02 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,19 @@ t_chunk			*alloc(t_page **page, t_chunk *free_chunk, size_t size) {
 	remove_chunk_from_list(free_list, free_chunk);
 	// SPLIT
 	remaining = free_chunk->size - size;
+	free_chunk->size = size - SECURE_PADDING;
 	if (remaining > (int)CHUNK_OVERHEAD + SECURE_PADDING * 2) {
 		new_chunk = (void*)free_chunk + size;
 		new_chunk->prev = NULL;
-		new_chunk->size = remaining - 1;
+		new_chunk->size = remaining - SECURE_PADDING;
 		new_chunk->next = NULL;
 		secure_chunk(new_chunk);
+		new_chunk->size += SECURE_PADDING;
 		add_chunk_to_list(free_list, new_chunk);
 	}
-	free_chunk->size = size - 1;
+	else {
+		free_chunk->size += remaining;
+	}
 	// SECURE_PADDING
 	secure_chunk(free_chunk);
 	// ADD TO MALLOC_LIST
@@ -58,7 +62,7 @@ static t_chunk	*increase_heap(int zone, size_t size) {
 		alloc_size = zone_size(zone);
 	// PAGE
 	new_page = ft_alloc(PAGE_OVERHEAD + alloc_size + SECURE_PADDING * 2);
-	new_page++;
+	new_page += SECURE_PADDING;
 	// SECURE_PADDING
 	ft_memset((void*)new_page - 1, '\0', 1);
 	ft_memset((void*)new_page + PAGE_OVERHEAD, '\0', 1);
@@ -91,12 +95,12 @@ void			*malloc(size_t size) {
 	void *ret = find_free(size, zone);
 	if (!ret)
 		ret = increase_heap(zone, size);
+	show_alloc_mem();
+	show_free_mem();
 	if (debug) {
 		ft_putstr("\nreturn ");
 		ft_putaddress(CHUNK_PAYLOAD(ret));
 		ft_putstr(";\n");
 	}
-	show_alloc_mem();
-	show_free_mem();
 	return CHUNK_PAYLOAD(ret);
 }

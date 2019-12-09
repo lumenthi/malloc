@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 15:01:14 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/08 01:31:21 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/09 01:57:57 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ extern int		debug;
 
 # define CHUNK_OVERHEAD			sizeof(t_chunk) // 24
 # define PAGE_OVERHEAD			sizeof(t_page) // 24
-# define SECURE_PADDING			1
+# define SECURE_PADDING			2
 
 # define CHUNK_PAYLOAD(addr)	addr+CHUNK_OVERHEAD+SECURE_PADDING
 # define CHUNK_HEADER(addr)		addr-SECURE_PADDING-CHUNK_OVERHEAD
@@ -38,8 +38,8 @@ extern int		debug;
 //# define SMALL 15360
 
 //32 bits
-# define TINY 992 + CHUNK_OVERHEAD//496 //124
-# define SMALL 15369 + CHUNK_OVERHEAD//15359
+# define TINY 992 + CHUNK_OVERHEAD + SECURE_PADDING //496 //124
+# define SMALL 15369 + CHUNK_OVERHEAD + SECURE_PADDING //15359
 
 typedef struct				s_chunk {
 	struct s_chunk			*prev;

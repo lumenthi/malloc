@@ -6,16 +6,13 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 10:37:35 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/08 02:38:44 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/09 01:58:10 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-
-void show_alloc_mem() {
-}
 
 void *malloc_fill(size_t size) {
 	char *ptr = NULL;
@@ -159,7 +156,7 @@ void *ptr2 = malloc(1024);
 free(ptr1);
 free(ptr2);
 malloc(12);
-write(1, "DMM SLAYER LINE\n", 16);
+write(1, "SLAYING LINE\n", 13);
 malloc(776);
 // malloc(112);
 // malloc(1336);
@@ -167,6 +164,24 @@ malloc(776);
 // malloc(432);
 }
 
+void test10() {
+	void *ptr1 = malloc_fill(10);
+	void *ptr2 = malloc_fill(2);
+	void *ptr3 = malloc_fill(869);
+	// free(ptr2);
+	void *ptr4 = malloc_fill(1);
+	malloc(5);
+	void *ptr = realloc(ptr2, 10);
+	// free(ptr4);
+}
+
+void test11() {
+	void *ptr1 = malloc(200);
+	void *ptr2 = malloc(200);
+	free(ptr2);
+	free(ptr1);
+}
+
 void main() {
-	test9();
+	test11();
 }
