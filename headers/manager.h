@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 15:01:14 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/10 01:16:00 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/10 02:15:03 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ extern int		debug;
 //# define SMALL 15360
 
 //32 bits
-# define TINY 992 //496 //124
-# define SMALL 15369 //15359
+# define TINY 992 + CHUNK_OVERHEAD + TAIL_PAD + HEAD_PAD//496 //124
+# define SMALL 15369 + CHUNK_OVERHEAD + TAIL_PAD + HEAD_PAD//15359
 
 typedef struct				s_chunk {
 	struct s_chunk			*prev;
