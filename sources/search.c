@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 01:27:30 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/10 00:04:17 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/11 00:08:47 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	*find_free(size_t size, int begin_zone) {
 	return NULL;
 }
 
-int		invalid_address(void *ptr) {
+t_page		*valid_address(void *ptr) {
 	t_chunk *tmp;
 	t_page *page = NULL;
 	int i = 0;
@@ -58,12 +58,12 @@ int		invalid_address(void *ptr) {
 			tmp = page->malloc_list;
 			while (tmp) {
 				if (tmp == ptr)
-					return 0;
+					return page;
 				tmp = tmp->next;
 			}
 			page = page->next;
 		}
 		i++;
 	}
-	return 1;
+	return NULL;
 }

@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 01:30:41 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/10 14:07:54 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/11 00:51:01 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	add_chunk_to_list(t_chunk **list, t_chunk *chunk) {
 			tmp = tmp->next;
 		chunk->next = tmp->next;
 		if (tmp->next != NULL)
-			chunk->next->next = tmp;
+			chunk->next->prev = chunk;
 		tmp->next = chunk;
 		chunk->prev = tmp;
 	}
@@ -70,20 +70,15 @@ void	remove_chunk_from_list(t_chunk **list, t_chunk *chunk) {
 void	merge_chunk(t_chunk **list, t_chunk *chunk) {
 	if (chunk->next) {
 		if ((void*)chunk + chunk->size == (void*)chunk->next) {
-			ft_putstr("MERGE NEXT\n");
 			chunk->size += chunk->next->size;
 			remove_chunk_from_list(list, chunk->next);
 		}
 	}
 	if (chunk->prev) {
-		debug_address(chunk, "chunk");
-		debug_address(chunk->prev, "chunk->prev");
-		debug_address(chunk->prev + chunk->prev->size, "end chunk->prev");
 		if ((void*)chunk->prev + chunk->prev->size == chunk) {
-			ft_putstr("MERG PREV\n");
 			chunk->prev->size += chunk->size;
-			remove_chunk_from_list(list, chunk);
 			chunk = chunk->prev;
+			remove_chunk_from_list(list, chunk->next);
 		}
 	}
 }

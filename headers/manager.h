@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 15:01:14 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/10 13:26:01 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/11 00:35:05 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void						*ft_alloc(size_t size);
 
 // search.c
 void						*find_free(size_t size, int begin_zone);
-int							invalid_address(void *ptr);
+t_page						*valid_address(void *ptr);
 
 // list.c
 void						add_page_to_list(int zone, t_page *new_page);

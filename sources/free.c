@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 10:51:10 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/10 14:09:27 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/11 00:39:46 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,13 @@ void	free(void *ptr) {
 		return;
 	}
 	t_chunk *header = CHUNK_HEADER(ptr);
-	if (invalid_address(header)) {
+	if (!(page = valid_address(header))) {
 		if (debug)
 			ft_putstr("\nreturn not valid ptr;\n");
 		return;
 	}
-	page = (t_page *)page_head(header);
-	debug_address(header, "header");
-	debug_address(page, "page");
 	remove_chunk_from_list(&page->malloc_list, header);
 	add_chunk_to_list(&page->free_list, header);
-	show_free_mem();
 	merge_chunk(&page->free_list, header);
 	//show_alloc_mem();
 	//show_free_mem();
