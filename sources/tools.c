@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 01:32:22 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/08 02:08:19 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/10 01:16:28 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,11 @@ void	debug_size(size_t size, char *name) {
 
 void	*page_head(t_chunk *chunk) {
 	t_chunk *tmp = chunk;
-	if (is_valid(tmp)) {
-		while (tmp->prev && is_valid(tmp->prev))
+	if (tmp) {
+		while (tmp->prev)
 			tmp = tmp->prev;
 	}
-	return (void *)tmp - PAGE_OVERHEAD - SECURE_PADDING * 2;
+	return (void *)tmp - PAGE_OVERHEAD;
 }
 
 int		get_zone(size_t size) {
@@ -66,13 +66,14 @@ size_t	zone_size(int zone) {
 
 int		is_valid(void *tmp) {
 	char *t = tmp;
-	// debug_address((t-1), "t-1");
-	// debug_address(t + CHUNK_OVERHEAD + 1, "t + CHUNK_OVERHEAD + 1");
+	//debug_address((t-1), "t-1");
+	//debug_address(t, "t");
+	//debug_address(t + CHUNK_OVERHEAD, "t + CHUNK_OVERHEAD");
 	if (t && *(t - 1) == '\0' && *(t + CHUNK_OVERHEAD) == '\0') {
-		// ft_putstr("VALID\n");
+		//ft_putstr("VALID\n");
 		return 1;
 	}
-	// ft_putstr("INVALID\n");
+	//ft_putstr("INVALID\n");
 	return 0;
 }
 

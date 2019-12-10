@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 01:30:41 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/09 02:00:50 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/10 00:19:45 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,10 @@ void	add_chunk_to_list(t_chunk **list, t_chunk *chunk) {
 		*list = chunk;
 		return ;
 	}
-	while (is_valid(tmp->next) && chunk > tmp->next) {
+	while (tmp->next && chunk > tmp->next) {
 		tmp = tmp->next;
 	}
-	if (is_valid(tmp->next)) {
+	if (tmp->next) {
 		chunk->next = tmp->next;
 		tmp->next->prev = chunk;
 	}

@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 01:27:30 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/06 03:22:45 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/10 00:04:17 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	*find_in_list(size_t size, t_chunk *free_list) {
 	t_chunk *tmp = free_list;
-	while (is_valid(tmp)) {
+	while (tmp) {
 		if (tmp->size >= size)
 			return tmp;
 		tmp = tmp->next;
@@ -56,7 +56,7 @@ int		invalid_address(void *ptr) {
 		page = g_page[i];
 		while (page) {
 			tmp = page->malloc_list;
-			while (is_valid(tmp)) {
+			while (tmp) {
 				if (tmp == ptr)
 					return 0;
 				tmp = tmp->next;

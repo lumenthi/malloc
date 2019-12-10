@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 18:00:19 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/09 01:51:02 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/10 01:39:53 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,17 @@
 
 t_page			*g_page[3] = {NULL, NULL, NULL};
 
-void			secure_chunk(t_chunk *chunk) {
-	// debug_address((void*)chunk - 1, "SECURING");
-	// debug_address(chunk, "CHUNK");
-	// debug_address((void*)chunk + CHUNK_OVERHEAD, "SECURING");
-	ft_memset((void*)chunk - 1, '\0', 1);
+void			secure_chunk(t_chunk *chunk, size_t size) {
+   /* debug_size(size, "size");*/
+	/*debug_address(chunk, "CHUNK");*/
+	/*debug_address((void*)chunk + CHUNK_OVERHEAD, "SECURING");*/
+	/*debug_address((void*)chunk + CHUNK_OVERHEAD + HEAD_PAD - 1, "SECURING");*/
+	/*debug_address((void*)chunk + size - TAIL_PAD, "SECURING");*/
+	/*debug_address((void*)chunk + size - 1, "SECURING");*/
 	ft_memset((void*)chunk + CHUNK_OVERHEAD, '\0', 1);
+	ft_memset((void*)chunk + CHUNK_OVERHEAD + HEAD_PAD - 1, '\0', 1);
+	ft_memset((void*)chunk + size - TAIL_PAD, '\0', 1);
+	ft_memset((void*)chunk + size - 1, '\0', 1);
 }
 
 t_chunk			*alloc(t_page **page, t_chunk *free_chunk, size_t size) {
@@ -31,21 +36,20 @@ t_chunk			*alloc(t_page **page, t_chunk *free_chunk, size_t size) {
 	remove_chunk_from_list(free_list, free_chunk);
 	// SPLIT
 	remaining = free_chunk->size - size;
-	free_chunk->size = size - SECURE_PADDING;
-	if (remaining > (int)CHUNK_OVERHEAD + SECURE_PADDING * 2) {
+	free_chunk->size = size;
+	if (remaining > (int)CHUNK_OVERHEAD + HEAD_PAD + TAIL_PAD) {
 		new_chunk = (void*)free_chunk + size;
 		new_chunk->prev = NULL;
-		new_chunk->size = remaining - SECURE_PADDING;
+		new_chunk->size = remaining;
 		new_chunk->next = NULL;
-		secure_chunk(new_chunk);
-		new_chunk->size += SECURE_PADDING;
+		secure_chunk(new_chunk, remaining);
 		add_chunk_to_list(free_list, new_chunk);
 	}
 	else {
 		free_chunk->size += remaining;
 	}
 	// SECURE_PADDING
-	secure_chunk(free_chunk);
+	secure_chunk(free_chunk, free_chunk->size);
 	// ADD TO MALLOC_LIST
 	add_chunk_to_list(malloc_list, free_chunk);
 	return free_chunk;
@@ -61,19 +65,12 @@ static t_chunk	*increase_heap(int zone, size_t size) {
 	else
 		alloc_size = zone_size(zone);
 	// PAGE
-	new_page = ft_alloc(PAGE_OVERHEAD + alloc_size + SECURE_PADDING * 2);
-	new_page += SECURE_PADDING;
-	// SECURE_PADDING
-	ft_memset((void*)new_page - 1, '\0', 1);
-	ft_memset((void*)new_page + PAGE_OVERHEAD, '\0', 1);
-	// debug_address((void*)new_page - 1, "SECURING");
-	// debug_address(new_page, "PAGE");
-	// debug_address((void*)new_page + PAGE_OVERHEAD, "SECURING");
+	new_page = ft_alloc(PAGE_OVERHEAD + alloc_size);
 	new_page->malloc_list = NULL;
 	new_page->free_list = NULL;
 	new_page->next = NULL;
 	// CHUNK
-	new_chunk = (t_chunk *)((void *)new_page + PAGE_OVERHEAD + SECURE_PADDING * 2);
+	new_chunk = (t_chunk *)((void *)new_page + PAGE_OVERHEAD);
 	new_chunk->prev = NULL;
 	new_chunk->size = alloc_size;
 	new_chunk->next = NULL;
@@ -90,13 +87,13 @@ void			*malloc(size_t size) {
 		ft_putnbr(size);
 		ft_putstr(");");
 	}
-	size += SECURE_PADDING + CHUNK_OVERHEAD + SECURE_PADDING;
+	size += CHUNK_OVERHEAD + HEAD_PAD + /* PAYLOAD */ TAIL_PAD;
 	int zone = get_zone(size);
 	void *ret = find_free(size, zone);
 	if (!ret)
 		ret = increase_heap(zone, size);
-	show_alloc_mem();
-	show_free_mem();
+	// show_alloc_mem();
+	// show_free_mem();
 	if (debug) {
 		ft_putstr("\nreturn ");
 		ft_putaddress(CHUNK_PAYLOAD(ret));
