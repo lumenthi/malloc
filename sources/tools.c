@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 01:32:22 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/10 01:16:28 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/10 13:52:44 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,8 @@ void	debug_size(size_t size, char *name) {
 
 void	*page_head(t_chunk *chunk) {
 	t_chunk *tmp = chunk;
-	if (tmp) {
-		while (tmp->prev)
-			tmp = tmp->prev;
-	}
+	while (tmp->prev)
+		tmp = tmp->prev;
 	return (void *)tmp - PAGE_OVERHEAD;
 }
 

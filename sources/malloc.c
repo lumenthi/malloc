@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 18:00:19 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/10 01:39:53 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/10 02:31:19 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,8 @@ void			*malloc(size_t size) {
 	void *ret = find_free(size, zone);
 	if (!ret)
 		ret = increase_heap(zone, size);
-	// show_alloc_mem();
-	// show_free_mem();
+	//show_alloc_mem();
+	//show_free_mem();
 	if (debug) {
 		ft_putstr("\nreturn ");
 		ft_putaddress(CHUNK_PAYLOAD(ret));

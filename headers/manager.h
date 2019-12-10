@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 15:01:14 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/10 02:15:03 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/10 13:26:01 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ int							invalid_address(void *ptr);
 void						add_page_to_list(int zone, t_page *new_page);
 void						add_chunk_to_list(t_chunk **list, t_chunk *chunk);
 void						remove_chunk_from_list(t_chunk **list, t_chunk *chunk);
+void						merge_chunk(t_chunk **list, t_chunk *chunk);
 
 // show_alloc_mem.c
 
