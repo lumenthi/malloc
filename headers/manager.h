@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 15:01:14 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/11 00:35:05 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/11 23:54:00 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MANAGER_H
 
 # include <sys/mman.h>
+# include <unistd.h>
 # include "libft.h"
 
 // DEFINE
@@ -24,8 +25,8 @@ extern int		debug;
 
 # define CHUNK_OVERHEAD			sizeof(t_chunk) // 24
 # define PAGE_OVERHEAD			sizeof(t_page) // 24
-# define HEAD_PAD 12
-# define TAIL_PAD 24
+# define HEAD_PAD 120
+# define TAIL_PAD 240
 
 # define CHUNK_PAYLOAD(addr)	addr+CHUNK_OVERHEAD+HEAD_PAD
 # define CHUNK_HEADER(addr)		addr-HEAD_PAD-CHUNK_OVERHEAD
@@ -39,8 +40,8 @@ extern int		debug;
 //# define SMALL 15360
 
 //32 bits
-# define TINY 992 + CHUNK_OVERHEAD + TAIL_PAD + HEAD_PAD//496 //124
-# define SMALL 15369 + CHUNK_OVERHEAD + TAIL_PAD + HEAD_PAD//15359
+# define TINY (size_t)(4 * getpagesize())
+# define SMALL (size_t)(16 * getpagesize())
 
 typedef struct				s_chunk {
 	struct s_chunk			*prev;

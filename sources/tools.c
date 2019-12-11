@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 01:32:22 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/10 13:52:44 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/11 23:45:58 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 // DEBUG, REMOVE AFTER
 
-int		debug = 1;
+int		debug = 0;
 
 void	debug_address(void *address, char *str) {
 	ft_putaddress(address);

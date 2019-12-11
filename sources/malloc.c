@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 18:00:19 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/10 02:31:19 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/11 23:52:25 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ void			*malloc(size_t size) {
 		ft_putstr(");");
 	}
 	size += CHUNK_OVERHEAD + HEAD_PAD + /* PAYLOAD */ TAIL_PAD;
+	size = (size + 16) & (~0xf);
 	int zone = get_zone(size);
 	void *ret = find_free(size, zone);
 	if (!ret)
