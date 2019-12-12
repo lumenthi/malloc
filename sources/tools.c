@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 01:32:22 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/11 23:45:58 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/12 01:50:06 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,9 @@ void	*ft_alloc(size_t size) {
 	if (ret == MAP_FAILED)
 		ft_exit("MMAP ERROR, CANT MAP NECESSARY MEMORY, EXITING\n");
 	return (ret);
+}
+
+void	ft_free(t_page *page) {
+	if (munmap((void*)page, page->size) == -1)
+		ft_exit("MUNMAP ERROR, CANT UNMAP MEMORY, EXITING\n");
 }

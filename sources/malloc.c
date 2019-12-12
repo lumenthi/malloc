@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 18:00:19 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/11 23:52:25 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/12 01:49:30 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,23 +61,24 @@ static t_chunk	*increase_heap(int zone, size_t size) {
 	size_t alloc_size = 0;
 
 	if (zone == 2)
-		alloc_size = size;
+		alloc_size = size + PAGE_OVERHEAD;
 	else
 		alloc_size = zone_size(zone);
 	// PAGE
-	new_page = ft_alloc(PAGE_OVERHEAD + alloc_size);
+	new_page = ft_alloc(alloc_size);
+	new_page->size = alloc_size;
 	new_page->malloc_list = NULL;
 	new_page->free_list = NULL;
 	new_page->next = NULL;
 	// CHUNK
 	new_chunk = (t_chunk *)((void *)new_page + PAGE_OVERHEAD);
 	new_chunk->prev = NULL;
-	new_chunk->size = alloc_size;
+	new_chunk->size = alloc_size - PAGE_OVERHEAD;
 	new_chunk->next = NULL;
 	// LISTS
 	add_chunk_to_list(&new_page->free_list, new_chunk);
 	alloc(&new_page, new_chunk, size);
-	add_page_to_list(zone, new_page);
+	add_page_to_list(&g_page[zone], new_page);
 	return new_chunk;
 }
 

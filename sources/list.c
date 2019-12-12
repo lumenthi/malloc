@@ -6,30 +6,44 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 01:30:41 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/11 00:51:01 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/12 01:11:00 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "manager.h"
 
-void	add_page_to_list(int zone, t_page *new_page) {
-	t_page	**head = &g_page[zone];
-	t_page	*tmp = *head;
+void	add_page_to_list(t_page **list, t_page *page) {
+	t_page *cur = NULL;
+	if (*list == NULL || *list >= page) {
+		page->next = *list;
+		*list = page;
+	}
+	else {
+		cur = *list;
+		while (cur->next != NULL && cur->next < page)
+			cur = cur->next;
+		page->next = cur->next;
+		cur->next = page;
+	}
+}
 
-	if (*head == NULL) {
-		*head = new_page;
-		return ;
+void	remove_page_from_list(t_page **list, t_page *page) {
+	t_page *prev = NULL;
+	t_page *cur = NULL;
+	cur = *list;
+	while (cur) {
+		if (cur == page) {
+			if (prev == NULL)
+				*list = cur->next;
+			else {
+				prev->next = cur->next;
+			}
+			return ;
+		}
+		prev = cur;
+		cur = cur->next;
 	}
-	if (new_page < *head) {
-		new_page->next = *head;
-		*head = new_page;
-		return ;
-	}
-	while (tmp->next != NULL && tmp < tmp->next)
-		tmp = tmp->next;
-	if (tmp->next)
-		new_page->next = tmp->next;
-	tmp->next = new_page;
+	return ;
 }
 
 void	add_chunk_to_list(t_chunk **list, t_chunk *chunk) {

@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 20:01:57 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/10 01:50:24 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/12 01:13:52 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ void	display_zone_name(int zone) {
 }
 
 void display_chunks(t_page *page, char mode) {
-	t_chunk **head = mode == 'f' ? &page->free_list : &page->malloc_list;
-	t_chunk *tmp = *head;
+	t_chunk *head = mode == 'f' ? page->free_list : page->malloc_list;
+	t_chunk *tmp = head;
 
 	if (mode == 'm')
 		ft_putstr("ALLOCATED CHUNKS : \n");

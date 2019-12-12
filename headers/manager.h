@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 15:01:14 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/11 23:54:00 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/12 01:54:01 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ extern int		debug;
 
 # define CHUNK_OVERHEAD			sizeof(t_chunk) // 24
 # define PAGE_OVERHEAD			sizeof(t_page) // 24
-# define HEAD_PAD 120
-# define TAIL_PAD 240
+# define HEAD_PAD 128
+# define TAIL_PAD 256
 
 # define CHUNK_PAYLOAD(addr)	addr+CHUNK_OVERHEAD+HEAD_PAD
 # define CHUNK_HEADER(addr)		addr-HEAD_PAD-CHUNK_OVERHEAD
@@ -50,6 +50,7 @@ typedef struct				s_chunk {
 }							t_chunk;
 
 typedef struct				s_page {
+	size_t					size;
 	t_chunk					*malloc_list;
 	t_chunk					*free_list;
 	struct s_page			*next;
@@ -76,13 +77,15 @@ int							get_zone(size_t size);
 size_t						zone_size(int zone);
 int							is_valid(void *tmp);
 void						*ft_alloc(size_t size);
+void						ft_free(t_page *page);
 
 // search.c
 void						*find_free(size_t size, int begin_zone);
 t_page						*valid_address(void *ptr);
 
 // list.c
-void						add_page_to_list(int zone, t_page *new_page);
+void						add_page_to_list(t_page **list, t_page *page);
+void						remove_page_from_list(t_page **list, t_page *page);
 void						add_chunk_to_list(t_chunk **list, t_chunk *chunk);
 void						remove_chunk_from_list(t_chunk **list, t_chunk *chunk);
 void						merge_chunk(t_chunk **list, t_chunk *chunk);

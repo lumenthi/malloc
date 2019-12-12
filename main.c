@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 10:37:35 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/11 00:46:31 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/12 01:40:16 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,6 +223,12 @@ malloc(12);
 //malloc(191);
 }
 
+void test14() {
+	void *ptr = malloc(10);
+	malloc(10);
+	free(ptr);
+}
+
 void main() {
-	test13();
+	test14();
 }
