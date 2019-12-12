@@ -6,7 +6,7 @@
 #    By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/22 14:06:43 by lumenthi          #+#    #+#              #
-#    Updated: 2019/12/05 01:37:04 by lumenthi         ###   ########.fr        #
+#    Updated: 2019/12/12 13:01:31 by lumenthi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,7 +72,7 @@ $(NAME): $(OBJS) ${HEADERS}
 	@ $(CC) $(OBJS) -shared -o $(NAME) $(LIBFT)
 	@ printf " %b | Compiled %b%b%b\n" $(TICK) $(GREEN) $(NAME) $(BLANK)
 
-$(OBJDIR)/%.o: %.c
+$(OBJDIR)/%.o: %.c $(HEADERS)
 	@ mkdir -p $(OBJDIR)
 	@ $(CC) -c $(FLAGS) -I$(HEADDIR) -I$(LIBDIR) -o $@ $<
 
