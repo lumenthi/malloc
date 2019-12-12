@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 18:00:19 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/12 01:49:30 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/12 12:28:20 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ void			secure_chunk(t_chunk *chunk, size_t size) {
 	/*debug_address((void*)chunk + CHUNK_OVERHEAD + HEAD_PAD - 1, "SECURING");*/
 	/*debug_address((void*)chunk + size - TAIL_PAD, "SECURING");*/
 	/*debug_address((void*)chunk + size - 1, "SECURING");*/
-	ft_memset((void*)chunk + CHUNK_OVERHEAD, '\0', 1);
-	ft_memset((void*)chunk + CHUNK_OVERHEAD + HEAD_PAD - 1, '\0', 1);
-	ft_memset((void*)chunk + size - TAIL_PAD, '\0', 1);
+	//ft_memset((void*)chunk + CHUNK_OVERHEAD, '\0', 1);
+	//ft_memset((void*)chunk + CHUNK_OVERHEAD + HEAD_PAD - 1, '\0', 1);
+	//ft_memset((void*)chunk + size - TAIL_PAD, '\0', 1);
 	ft_memset((void*)chunk + size - 1, '\0', 1);
 }
 
@@ -37,7 +37,7 @@ t_chunk			*alloc(t_page **page, t_chunk *free_chunk, size_t size) {
 	// SPLIT
 	remaining = free_chunk->size - size;
 	free_chunk->size = size;
-	if (remaining > (int)CHUNK_OVERHEAD + HEAD_PAD + TAIL_PAD) {
+	if (remaining > (int)CHUNK_OVERHEAD) {
 		new_chunk = (void*)free_chunk + size;
 		new_chunk->prev = NULL;
 		new_chunk->size = remaining;
@@ -88,12 +88,13 @@ void			*malloc(size_t size) {
 		ft_putnbr(size);
 		ft_putstr(");");
 	}
-	size += CHUNK_OVERHEAD + HEAD_PAD + /* PAYLOAD */ TAIL_PAD;
-	size = (size + 16) & (~0xf);
+	size += CHUNK_OVERHEAD;
+	size = (size + (ALIGNMENT - 1)) & ~(ALIGNMENT - 1);
 	int zone = get_zone(size);
 	void *ret = find_free(size, zone);
 	if (!ret)
 		ret = increase_heap(zone, size);
+	//debug_address(ret, "malloc_ret");
 	//show_alloc_mem();
 	//show_free_mem();
 	if (debug) {
