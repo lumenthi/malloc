@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 10:37:35 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/12 12:34:22 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/13 19:46:51 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,34 @@ void test1() {
 }
 
 void test2() {
-	void *ptr = malloc(10);
-	void *ptr2 = realloc(ptr, 20);
+	void *ptr = malloc(3);
+	void *ptr2 = realloc(ptr, 33);
+}
+
+void test3() {
+	int size = 25;
+	char *str = (char *)calloc(size, sizeof(char));
+	//malloc_fill(15 * sizeof(char));
+	int i = 0;
+	while (i < size)
+		str[i++] = 'a';
+	write(1, str, size);
+}
+
+void test4() {
+	int size = 5;
+	char *str = (char *)calloc(size, sizeof(char));
+	//malloc_fill(15 * sizeof(char));
+	int i = 0;
+	while (i < size)
+		str[i++] = 'a';
+	i = 0;
+	while (str[i]) {
+		write(1, ".", 1);
+		i++;
+	}
 }
 
 void main() {
-	test2();
+	test4();
 }

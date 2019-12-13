@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 15:01:14 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/12 12:21:47 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/13 19:25:19 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,9 @@ extern t_page				*g_page[3]; // [0- TINY, 1- SMALL, 2- LARGE]
 t_chunk						*alloc(t_page **page, t_chunk *free_chunk, size_t size);
 void						*malloc(size_t size);
 
+// calloc.c
+void						*calloc(size_t nelem, size_t size);
+
 // realloc.c
 void						*realloc(void *ptr, size_t size);
 
@@ -74,7 +77,6 @@ void						debug_size(size_t size, char *name);
 void						*page_head(t_chunk *chunk);
 int							get_zone(size_t size);
 size_t						zone_size(int zone);
-int							is_valid(void *tmp);
 void						*ft_alloc(size_t size);
 void						ft_free(t_page *page);
 

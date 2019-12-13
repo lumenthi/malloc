@@ -6,26 +6,13 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 18:00:19 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/12 12:28:20 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/13 19:32:14 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "manager.h"
 
 t_page			*g_page[3] = {NULL, NULL, NULL};
-
-void			secure_chunk(t_chunk *chunk, size_t size) {
-   /* debug_size(size, "size");*/
-	/*debug_address(chunk, "CHUNK");*/
-	/*debug_address((void*)chunk + CHUNK_OVERHEAD, "SECURING");*/
-	/*debug_address((void*)chunk + CHUNK_OVERHEAD + HEAD_PAD - 1, "SECURING");*/
-	/*debug_address((void*)chunk + size - TAIL_PAD, "SECURING");*/
-	/*debug_address((void*)chunk + size - 1, "SECURING");*/
-	//ft_memset((void*)chunk + CHUNK_OVERHEAD, '\0', 1);
-	//ft_memset((void*)chunk + CHUNK_OVERHEAD + HEAD_PAD - 1, '\0', 1);
-	//ft_memset((void*)chunk + size - TAIL_PAD, '\0', 1);
-	ft_memset((void*)chunk + size - 1, '\0', 1);
-}
 
 t_chunk			*alloc(t_page **page, t_chunk *free_chunk, size_t size) {
 	t_chunk **malloc_list = &(*page)->malloc_list;
@@ -42,14 +29,11 @@ t_chunk			*alloc(t_page **page, t_chunk *free_chunk, size_t size) {
 		new_chunk->prev = NULL;
 		new_chunk->size = remaining;
 		new_chunk->next = NULL;
-		secure_chunk(new_chunk, remaining);
 		add_chunk_to_list(free_list, new_chunk);
 	}
 	else {
 		free_chunk->size += remaining;
 	}
-	// SECURE_PADDING
-	secure_chunk(free_chunk, free_chunk->size);
 	// ADD TO MALLOC_LIST
 	add_chunk_to_list(malloc_list, free_chunk);
 	return free_chunk;

@@ -6,7 +6,7 @@
 #    By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/22 14:06:43 by lumenthi          #+#    #+#              #
-#    Updated: 2019/12/12 13:01:31 by lumenthi         ###   ########.fr        #
+#    Updated: 2019/12/13 19:39:06 by lumenthi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,6 +50,7 @@ HEADS = manager.h
 SRCS = malloc.c \
 				free.c \
 				realloc.c \
+				calloc.c \
 				show_alloc_mem.c \
 				list.c \
 				search.c \

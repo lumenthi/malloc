@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 01:32:22 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/12 01:50:06 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/13 19:25:38 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,19 +60,6 @@ size_t	zone_size(int zone) {
 		return TINY;
 	else
 		return SMALL;
-}
-
-int		is_valid(void *tmp) {
-	char *t = tmp;
-	//debug_address((t-1), "t-1");
-	//debug_address(t, "t");
-	//debug_address(t + CHUNK_OVERHEAD, "t + CHUNK_OVERHEAD");
-	if (t && *(t - 1) == '\0' && *(t + CHUNK_OVERHEAD) == '\0') {
-		//ft_putstr("VALID\n");
-		return 1;
-	}
-	//ft_putstr("INVALID\n");
-	return 0;
 }
 
 void	*ft_alloc(size_t size) {
