@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 20:01:57 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/13 19:05:31 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/17 15:15:46 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,33 +21,36 @@ void	display_zone_name(int zone) {
 		ft_putstr("LARGE : ");
 }
 
-void display_chunks(t_page *page, char mode) {
+size_t display_chunks(t_page *page, char mode) {
 	t_chunk *head = mode == 'f' ? page->free_list : page->malloc_list;
 	t_chunk *tmp = head;
+	size_t	total = 0;
 
-	if (mode == 'm')
-		ft_putstr("ALLOCATED CHUNKS : \n");
-	else
-		ft_putstr("FREE CHUNKS :\n");
 	while (tmp) {
-		ft_putaddress((void *)tmp);
+		ft_putaddress((void *)tmp + CHUNK_OVERHEAD);
 		ft_putstr(" - ");
 		ft_putaddress((void *)tmp + tmp->size);
 		ft_putstr(": ");
-		ft_putnbr(tmp->size);
-		ft_putstr(" octet(s)\n");
+		ft_putnbr(tmp->size - CHUNK_OVERHEAD);
+		ft_putstr(" octets\n");
+		total += tmp->size - CHUNK_OVERHEAD;
 		tmp = tmp->next;
 	}
+	return total;
 }
 
 void display_page(t_page *page, int zone, char mode) {
 	t_page *tmp = page;
+	size_t total = 0;
 
 	while (tmp) {
 		display_zone_name(zone);
 		ft_putaddress(tmp);
 		ft_putchar('\n');
-		display_chunks(tmp, mode);
+		total = display_chunks(tmp, mode);
+		ft_putstr("Total : ");
+		ft_putnbr(total);
+		ft_putstr(" octets\n");
 		tmp = tmp->next;
 	}
 }
@@ -55,19 +58,19 @@ void display_page(t_page *page, int zone, char mode) {
 void	show_free_mem() {
 	int i = 0;
 
+	ft_putstr("FREE CHUNKS :\n");
 	while (i < 3) {
 		display_page(g_page[i], i, 'f');
 		i++;
 	}
-	ft_putstr("_____________________\n");
 }
 
 void	show_alloc_mem() {
 	int i = 0;
 
+	ft_putstr("ALLOCATED CHUNKS : \n");
 	while (i < 3) {
 		display_page(g_page[i], i, 'm');
 		i++;
 	}
-	ft_putstr("_____________________\n");
 }
