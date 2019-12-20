@@ -6,7 +6,7 @@
 #    By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/22 14:06:43 by lumenthi          #+#    #+#              #
-#    Updated: 2019/12/13 19:39:06 by lumenthi         ###   ########.fr        #
+#    Updated: 2019/12/20 16:23:44 by lumenthi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ LIBPATH = $(CURRENT_DIR)/$(NAME)
 SYMLINKPATH = $(CURRENT_DIR)/$(SYMLINK)
 
 CC = gcc
-FLAGS = -Wall -Werror -Wextra -fPIC -g
+FLAGS = -Wall -Werror -Wextra -fPIC
 
 GREEN = '\033[4;32m'
 RED = '\033[4;31m'
@@ -109,5 +109,5 @@ fclean: clean
 re: fclean all
 
 run: $(SYMLINKPATH)
-	@ gcc -o test main.c
+	@ gcc -L. -lft_malloc -I$(LIBDIR) -o test main.c
 	@ ./inject ./test || true

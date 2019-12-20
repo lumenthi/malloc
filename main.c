@@ -6,13 +6,15 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 10:37:35 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/17 15:08:23 by lumenthi         ###   ########.fr       */
+/*   Updated: 2019/12/20 15:30:47 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+
+#include "headers/manager.h"
 
 void fill(void **ptr, int size) {
 	char *str = *ptr;
@@ -73,4 +75,5 @@ void test5() {
 
 void main() {
 	test5();
+	show_alloc_mem();
 }

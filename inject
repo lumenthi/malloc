@@ -5,8 +5,8 @@ LIB=$PWD/libft_malloc.so
 # INJECT
 export LD_PRELOAD=$LIB
 # TO USE SHOW_ALLOC_MEM
-export LD_LIBRARY_PATH=$LIB
+export LD_LIBRARY_PATH=$PWD
 
 # START COMMAND IN ARGUMENT
 echo Starting: "$@"
-eval "$@"
+/usr/bin/time -f "mem_max=%M time=%E" "$@"
