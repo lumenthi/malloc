@@ -6,7 +6,7 @@
 #    By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/22 14:06:43 by lumenthi          #+#    #+#              #
-#    Updated: 2019/12/20 16:23:44 by lumenthi         ###   ########.fr        #
+#    Updated: 2022/07/18 17:22:16 by lumenthi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -109,5 +109,5 @@ fclean: clean
 re: fclean all
 
 run: $(SYMLINKPATH)
-	@ gcc -L. -lft_malloc -I$(LIBDIR) -o test main.c
+	@ gcc -I$(LIBDIR) -o test main.c -L. -lft_malloc
 	@ ./inject ./test || true
