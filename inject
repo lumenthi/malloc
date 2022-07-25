@@ -9,4 +9,4 @@ export LD_LIBRARY_PATH=$PWD
 
 # START COMMAND IN ARGUMENT
 echo Starting: "$@"
-/usr/bin/time -f "mem_max=%M time=%E" "$@"
+/usr/bin/time -v -f "mem_max=%M time=%E" "$@"

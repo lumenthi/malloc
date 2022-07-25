@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 15:01:14 by lumenthi          #+#    #+#             */
-/*   Updated: 2022/07/25 11:25:39 by lumenthi         ###   ########.fr       */
+/*   Updated: 2022/07/25 12:50:41 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@
 # define SMALL_P		1
 # define LARGE_P		2
 
-# define TINY (size_t)(4 * getpagesize())
-# define SMALL (size_t)(16 * getpagesize())
+# define TINY (size_t)(32 * getpagesize())
+# define SMALL (size_t)(64 * getpagesize())
 
 typedef struct				s_chunk {
 	struct s_chunk			*prev;
