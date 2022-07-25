@@ -6,38 +6,11 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 01:32:22 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/13 19:25:38 by lumenthi         ###   ########.fr       */
+/*   Updated: 2022/07/25 11:51:47 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "manager.h"
-
-// DEBUG, REMOVE AFTER
-
-int		debug = 0;
-
-void	debug_address(void *address, char *str) {
-	ft_putaddress(address);
-	ft_putstr(": ");
-	ft_putstr(str);
-	ft_putchar('\n');
-}
-
-void	debug_character(char value, char *name) {
-	ft_putchar(value);
-	ft_putstr(": ");
-	ft_putstr(name);
-	ft_putchar('\n');
-}
-
-void	debug_size(size_t size, char *name) {
-	ft_putstr(name);
-	ft_putstr(": ");
-	ft_putnbr(size);
-	ft_putchar('\n');
-}
-
-//////////////////////////
 
 void	*page_head(t_chunk *chunk) {
 	t_chunk *tmp = chunk;
@@ -66,12 +39,14 @@ void	*ft_alloc(size_t size) {
 	void *ret;
 
 	ret = mmap(0, size, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0);
-	if (ret == MAP_FAILED)
-		ft_exit("MMAP ERROR, CANT MAP NECESSARY MEMORY, EXITING\n");
+	if (ret == MAP_FAILED) {
+		ft_putstr_fd("MMAP ERROR, CAN'T MAP NECESSARY MEMORY\n", STDERR_FILENO);
+		return NULL;
+	}
 	return (ret);
 }
 
 void	ft_free(t_page *page) {
 	if (munmap((void*)page, page->size) == -1)
-		ft_exit("MUNMAP ERROR, CANT UNMAP MEMORY, EXITING\n");
+		ft_putstr_fd("MUNMAP ERROR, CANT UNMAP MEMORY\n", STDERR_FILENO);
 }

@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 10:37:35 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/20 15:30:47 by lumenthi         ###   ########.fr       */
+/*   Updated: 2022/07/25 11:54:50 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,9 @@ void *malloc_fill(size_t size) {
 }
 
 void test1() {
-	malloc(10);
+	void *ret = malloc(10);
+	if (!ret)
+		ft_putstr("MALLOC RETURNS NULL\n");
 	malloc(16);
 	malloc(1);
 	malloc(20);
@@ -51,7 +53,6 @@ void test3() {
 	int i = 0;
 	while (i < size)
 		str[i++] = 'a';
-	write(1, str, size);
 }
 
 void test4() {
@@ -61,11 +62,6 @@ void test4() {
 	int i = 0;
 	while (i < size)
 		str[i++] = 'a';
-	i = 0;
-	while (str[i]) {
-		write(1, ".", 1);
-		i++;
-	}
 }
 
 void test5() {
@@ -74,6 +70,18 @@ void test5() {
 }
 
 void main() {
+	test1();
+	show_alloc_mem();
+	puts("===============================");
+	test2();
+	show_alloc_mem();
+	puts("===============================");
+	test3();
+	show_alloc_mem();
+	puts("===============================");
+	test4();
+	show_alloc_mem();
+	puts("===============================");
 	test5();
 	show_alloc_mem();
 }

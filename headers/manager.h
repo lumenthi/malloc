@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 15:01:14 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/13 19:25:19 by lumenthi         ###   ########.fr       */
+/*   Updated: 2022/07/25 11:25:39 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,6 @@
 # include <sys/mman.h>
 # include <unistd.h>
 # include "libft.h"
-
-// DEFINE
-
-// DEBUG
-# define d ft_putstr(".");
-extern int		debug;
 
 # define CHUNK_OVERHEAD			sizeof(t_chunk) // 24
 # define PAGE_OVERHEAD			sizeof(t_page) // 24
@@ -34,11 +28,6 @@ extern int		debug;
 # define SMALL_P		1
 # define LARGE_P		2
 
-// 64bits
-//# define TINY 992
-//# define SMALL 15360
-
-//32 bits
 # define TINY (size_t)(4 * getpagesize())
 # define SMALL (size_t)(16 * getpagesize())
 
@@ -70,10 +59,6 @@ void						*realloc(void *ptr, size_t size);
 void						free(void *ptr);
 
 // tools.c
-// debug functions
-void						debug_address(void *address, char *str);
-void						debug_size(size_t size, char *name);
-//
 void						*page_head(t_chunk *chunk);
 int							get_zone(size_t size);
 size_t						zone_size(int zone);

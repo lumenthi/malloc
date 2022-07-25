@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 18:00:19 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/13 19:32:14 by lumenthi         ###   ########.fr       */
+/*   Updated: 2022/07/25 11:55:02 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ static t_chunk	*increase_heap(int zone, size_t size) {
 		alloc_size = zone_size(zone);
 	// PAGE
 	new_page = ft_alloc(alloc_size);
+	if (!new_page)
+		return NULL;
 	new_page->size = alloc_size;
 	new_page->malloc_list = NULL;
 	new_page->free_list = NULL;
@@ -67,24 +69,11 @@ static t_chunk	*increase_heap(int zone, size_t size) {
 }
 
 void			*malloc(size_t size) {
-	if (debug) {
-		ft_putstr("malloc(");
-		ft_putnbr(size);
-		ft_putstr(");");
-	}
 	size += CHUNK_OVERHEAD;
 	size = (size + (ALIGNMENT - 1)) & ~(ALIGNMENT - 1);
 	int zone = get_zone(size);
 	void *ret = find_free(size, zone);
 	if (!ret)
 		ret = increase_heap(zone, size);
-	//debug_address(ret, "malloc_ret");
-	//show_alloc_mem();
-	//show_free_mem();
-	if (debug) {
-		ft_putstr("\nreturn ");
-		ft_putaddress(CHUNK_PAYLOAD(ret));
-		ft_putstr(";\n");
-	}
-	return CHUNK_PAYLOAD(ret);
+	return ret ? CHUNK_PAYLOAD(ret) : NULL;
 }
