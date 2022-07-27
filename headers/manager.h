@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 15:01:14 by lumenthi          #+#    #+#             */
-/*   Updated: 2022/07/27 11:59:37 by lumenthi         ###   ########.fr       */
+/*   Updated: 2022/07/27 12:14:14 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # define SMALL_P		1
 # define LARGE_P		2
 
-# define TINY_S			(size_t)(16 * getpagesize())
+# define TINY_S			(size_t)(32 * getpagesize())
 # define SMALL_S		(size_t)(64 * getpagesize())
 
 # define CHUNKS_LIMIT	128

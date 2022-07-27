@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 20:01:57 by lumenthi          #+#    #+#             */
-/*   Updated: 2022/07/27 09:52:18 by lumenthi         ###   ########.fr       */
+/*   Updated: 2022/07/27 12:23:12 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,13 @@ size_t	display_page(t_page *page, int zone, char mode) {
 	size_t total = 0;
 
 	while (tmp) {
-		display_zone_name(zone);
-		ft_putaddress(tmp);
-		ft_putchar('\n');
-		total += display_chunks(tmp, mode);
+		if ((mode == 'f' && tmp->free_list) ||
+			(mode == 'm' && tmp->malloc_list)) {
+			display_zone_name(zone);
+			ft_putaddress(tmp);
+			ft_putchar('\n');
+			total += display_chunks(tmp, mode);
+		}
 		tmp = tmp->next;
 	}
 	return total;
