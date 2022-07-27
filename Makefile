@@ -6,7 +6,7 @@
 #    By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/22 14:06:43 by lumenthi          #+#    #+#              #
-#    Updated: 2022/07/18 17:22:16 by lumenthi         ###   ########.fr        #
+#    Updated: 2022/07/27 12:52:34 by lumenthi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -106,7 +106,8 @@ fclean: clean
 	|| (printf " %b | " $(CROSS) && \
 	printf "No %b%b%b symlink\n" $(CYAN) $(SYMLINK) $(BLANK))
 
-re: fclean all
+re: fclean
+	@ $(MAKE) all
 
 run: $(SYMLINKPATH)
 	@ gcc -I$(LIBDIR) -o test main.c -L. -lft_malloc

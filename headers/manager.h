@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 15:01:14 by lumenthi          #+#    #+#             */
-/*   Updated: 2022/07/27 12:14:14 by lumenthi         ###   ########.fr       */
+/*   Updated: 2022/07/27 12:48:17 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include <unistd.h>
 # include "libft.h"
 # include <pthread.h>
-
 
 # define CHUNK_OVERHEAD			sizeof(t_chunk) // 24
 # define PAGE_OVERHEAD			sizeof(t_page) // 24
