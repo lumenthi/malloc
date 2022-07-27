@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 01:32:22 by lumenthi          #+#    #+#             */
-/*   Updated: 2022/07/25 11:51:47 by lumenthi         ###   ########.fr       */
+/*   Updated: 2022/07/27 11:18:03 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,20 @@ int		get_zone(size_t size) {
 	return TINY_P;
 }
 
+int		get_zone_p(size_t size) {
+	if (size > TINY_S) {
+		if (size > SMALL_S)
+			return LARGE_P;
+		return SMALL_P;
+	}
+	return TINY_P;
+}
+
 size_t	zone_size(int zone) {
 	if (zone == TINY_P)
-		return TINY;
+		return TINY_S;
 	else
-		return SMALL;
+		return SMALL_S;
 }
 
 void	*ft_alloc(size_t size) {

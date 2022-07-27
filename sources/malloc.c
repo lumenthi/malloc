@@ -6,13 +6,14 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 18:00:19 by lumenthi          #+#    #+#             */
-/*   Updated: 2022/07/25 11:55:02 by lumenthi         ###   ########.fr       */
+/*   Updated: 2022/07/27 12:06:46 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "manager.h"
 
-t_page			*g_page[3] = {NULL, NULL, NULL};
+t_page				*g_page[3] = {NULL, NULL, NULL};
+pthread_mutex_t		g_malloc_mutex = PTHREAD_MUTEX_INITIALIZER;
 
 t_chunk			*alloc(t_page **page, t_chunk *free_chunk, size_t size) {
 	t_chunk **malloc_list = &(*page)->malloc_list;
@@ -69,11 +70,13 @@ static t_chunk	*increase_heap(int zone, size_t size) {
 }
 
 void			*malloc(size_t size) {
+	pthread_mutex_lock(&g_malloc_mutex);
 	size += CHUNK_OVERHEAD;
 	size = (size + (ALIGNMENT - 1)) & ~(ALIGNMENT - 1);
 	int zone = get_zone(size);
 	void *ret = find_free(size, zone);
 	if (!ret)
 		ret = increase_heap(zone, size);
+	pthread_mutex_unlock(&g_malloc_mutex);
 	return ret ? CHUNK_PAYLOAD(ret) : NULL;
 }

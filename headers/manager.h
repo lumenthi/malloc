@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 15:01:14 by lumenthi          #+#    #+#             */
-/*   Updated: 2022/07/25 12:50:41 by lumenthi         ###   ########.fr       */
+/*   Updated: 2022/07/27 11:59:37 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include <sys/mman.h>
 # include <unistd.h>
 # include "libft.h"
+# include <pthread.h>
+
 
 # define CHUNK_OVERHEAD			sizeof(t_chunk) // 24
 # define PAGE_OVERHEAD			sizeof(t_page) // 24
@@ -28,8 +30,13 @@
 # define SMALL_P		1
 # define LARGE_P		2
 
-# define TINY (size_t)(32 * getpagesize())
-# define SMALL (size_t)(64 * getpagesize())
+# define TINY_S			(size_t)(16 * getpagesize())
+# define SMALL_S		(size_t)(64 * getpagesize())
+
+# define CHUNKS_LIMIT	128
+
+# define TINY			(size_t)(TINY_S/CHUNKS_LIMIT)
+# define SMALL			(size_t)(SMALL_S/CHUNKS_LIMIT)
 
 typedef struct				s_chunk {
 	struct s_chunk			*prev;
@@ -44,8 +51,11 @@ typedef struct				s_page {
 	struct s_page			*next;
 }							t_page;
 
-// malloc.c
+// global
 extern t_page				*g_page[3]; // [0- TINY, 1- SMALL, 2- LARGE]
+extern pthread_mutex_t		g_malloc_mutex;
+
+// malloc.c
 t_chunk						*alloc(t_page **page, t_chunk *free_chunk, size_t size);
 void						*malloc(size_t size);
 
@@ -61,6 +71,7 @@ void						free(void *ptr);
 // tools.c
 void						*page_head(t_chunk *chunk);
 int							get_zone(size_t size);
+int							get_zone_p(size_t size);
 size_t						zone_size(int zone);
 void						*ft_alloc(size_t size);
 void						ft_free(t_page *page);
