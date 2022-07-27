@@ -6,13 +6,13 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 20:01:57 by lumenthi          #+#    #+#             */
-/*   Updated: 2022/07/27 12:23:12 by lumenthi         ###   ########.fr       */
+/*   Updated: 2022/07/27 12:36:40 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "manager.h"
 
-void	display_zone_name(int zone) {
+static void	display_zone_name(int zone) {
 	if (zone == TINY_P)
 		ft_putstr("TINY : ");
 	else if (zone == SMALL_P)
@@ -21,7 +21,7 @@ void	display_zone_name(int zone) {
 		ft_putstr("LARGE : ");
 }
 
-size_t	display_chunks(t_page *page, char mode) {
+static size_t	display_chunks(t_page *page, char mode) {
 	t_chunk *head = mode == 'f' ? page->free_list : page->malloc_list;
 	t_chunk *tmp = head;
 	size_t	total = 0;
@@ -39,7 +39,7 @@ size_t	display_chunks(t_page *page, char mode) {
 	return total;
 }
 
-size_t	display_page(t_page *page, int zone, char mode) {
+static size_t	display_page(t_page *page, int zone, char mode) {
 	t_page *tmp = page;
 	size_t total = 0;
 
@@ -57,6 +57,7 @@ size_t	display_page(t_page *page, int zone, char mode) {
 }
 
 void	show_free_mem() {
+	pthread_mutex_lock(&g_malloc_mutex);
 	int i = 0;
 	size_t total = 0;
 
@@ -68,9 +69,11 @@ void	show_free_mem() {
 	ft_putstr("Total : ");
 	ft_putnbr(total);
 	ft_putstr(" octets\n");
+	pthread_mutex_unlock(&g_malloc_mutex);
 }
 
 void	show_alloc_mem() {
+	pthread_mutex_lock(&g_malloc_mutex);
 	int i = 0;
 	size_t total = 0;
 
@@ -82,4 +85,5 @@ void	show_alloc_mem() {
 	ft_putstr("Total : ");
 	ft_putnbr(total);
 	ft_putstr(" octets\n");
+	pthread_mutex_unlock(&g_malloc_mutex);
 }
