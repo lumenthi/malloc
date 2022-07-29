@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 01:30:41 by lumenthi          #+#    #+#             */
-/*   Updated: 2019/12/12 01:11:00 by lumenthi         ###   ########.fr       */
+/*   Updated: 2022/07/29 21:01:10 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,15 @@ void	add_page_to_list(t_page **list, t_page *page) {
 void	remove_page_from_list(t_page **list, t_page *page) {
 	t_page *prev = NULL;
 	t_page *cur = NULL;
+	if (*list == NULL || page == NULL)
+		return;
 	cur = *list;
 	while (cur) {
 		if (cur == page) {
 			if (prev == NULL)
 				*list = cur->next;
-			else {
+			else
 				prev->next = cur->next;
-			}
 			return ;
 		}
 		prev = cur;

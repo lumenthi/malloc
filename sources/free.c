@@ -6,7 +6,7 @@
 /*   By: lumenthi <lumenthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 10:51:10 by lumenthi          #+#    #+#             */
-/*   Updated: 2022/07/27 12:05:14 by lumenthi         ###   ########.fr       */
+/*   Updated: 2022/07/29 21:05:11 by lumenthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,8 @@ void	free(void *ptr) {
 	if (page->malloc_list == NULL) {
 		int zone = get_zone_p(page->size);
 		if (zone < 2) {
-			if (g_page[zone]->next == NULL) {
-				pthread_mutex_unlock(&g_malloc_mutex);
-				return ;
-			}
+			pthread_mutex_unlock(&g_malloc_mutex);
+			return ;
 		}
 		remove_page_from_list(&g_page[zone], page);
 		ft_free(page);
